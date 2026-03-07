@@ -1,0 +1,68 @@
+﻿
+> isaci-temp@0.1.0 build
+> next build
+
+Ôû▓ Next.js 16.1.6 (Turbopack)
+
+  Creating an optimized production build ...
+Ô£ô Compiled successfully in 2.7s
+  Running TypeScript ...
+  Collecting page data using 15 workers ...
+  Generating static pages using 15 workers (0/11) ...
+node.exe : Error occurred 
+prerendering page 
+"/parcerias". Read more: h
+ttps://nextjs.org/docs/mes
+sages/prerender-error
+No C:\nvm4w\nodejs\npm.ps1
+:16 caractere:5
++     & 
+"$basedir/node$exe"  "$bas
+edir/node_modules/npm/bin/
+npm-cli.js" ...
++     ~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo        
+      : NotSpecifi    ed: 
+(Error occurre    d 
+...prerender-err    
+or:String) [], Rem    
+oteException
+    + FullyQualifiedEr    
+rorId : NativeComm    
+andError
+ 
+Error: Attempted to call 
+buttonVariants() from the 
+server but buttonVariants 
+is on the client. It's 
+not possible to invoke a 
+client function from the 
+server, it can only be 
+rendered as a Component 
+or passed to props of a 
+Client Component.
+    at <unknown> (C:\Users
+\gabri\Documents\CursorPro
+jects\iSACI-Front-end-Web\
+.next\server\chunks\ssr\[r
+oot-of-the-server]__d8c782
+1d._.js:1:3656)
+    at m (C:\Users\gabri\D
+ocuments\CursorProjects\iS
+ACI-Front-end-Web\.next\se
+rver\chunks\ssr\[root-of-t
+he-server]__d8c7821d._.js:
+1:8723)
+    at stringify 
+(<anonymous>) {
+  digest: '212092252'
+}
+Export encountered an 
+error on /parcerias/page: 
+/parcerias, exiting the 
+build.
+Ô¿» Next.js build worker 
+exited with code: 1 and 
+signal: null
