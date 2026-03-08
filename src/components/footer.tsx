@@ -21,7 +21,7 @@ const projectLinks = [
 
 export function Footer() {
     return (
-        <footer className="border-t border-border bg-card">
+        <footer className="border-t border-border bg-background">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 {/* Main Footer Content */}
                 <div className="grid grid-cols-1 gap-8 py-12 sm:grid-cols-2 lg:grid-cols-4">
@@ -37,7 +37,9 @@ export function Footer() {
                             />
                         </Link>
                         <p className="text-sm text-muted-foreground leading-relaxed">
-                            Instituto de Soluções Amazônicas em Ciência e Inovação. Transformando conhecimento em progresso para a Amazônia.
+                            Instituto Sustentabilidade da Amazônia com Ciência e Inovação – iSACI.
+                            <br /><br />
+                            CNPJ: 51.798.925/0001-60
                         </p>
                     </div>
 
@@ -81,7 +83,7 @@ export function Footer() {
                         <ul className="space-y-3">
                             <li className="flex items-start gap-2 text-sm text-muted-foreground">
                                 <MapPin className="h-4 w-4 mt-0.5 text-primary flex-shrink-0" />
-                                <span>Av. Perimetral da Ciência, km 1, S/N - Guamá, Belém - PA. Prédio Espaço Inovação, 3° andar.</span>
+                                <span>Av. Perimetral da Ciência, S/N, KM 1, Parque de Ciência e Tecnologia Guamá – Belém/PA, CEP 66075-750.</span>
                             </li>
                             <li>
                                 <a
@@ -109,8 +111,8 @@ export function Footer() {
 
                 {/* Bottom Bar */}
                 <div className="flex flex-col items-center justify-between gap-4 py-6 sm:flex-row">
-                    <p className="text-xs text-muted-foreground">
-                        © {new Date().getFullYear()} ISACI - Instituto de Soluções Amazônicas em Ciência e Inovação. Todos os direitos reservados.
+                    <p className="text-xs text-muted-foreground text-center sm:text-left">
+                        © {new Date().getFullYear()} iSACI - Instituto Sustentabilidade da Amazônia com Ciência e Inovação.<br className="hidden sm:block" /> Todos os direitos reservados.
                     </p>
                     <div className="flex items-center gap-4">
                         <Link href="/transparencia" className="text-xs text-muted-foreground hover:text-primary transition-colors">

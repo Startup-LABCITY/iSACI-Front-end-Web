@@ -23,17 +23,17 @@ export function GlobeDemo() {
     }, []);
 
     const globeConfig = {
-        pointSize: 0.3,
+        pointSize: isDark ? 0.3 : 0.8,
         // High Contrast: Darker slate in light mode, Deep-black in dark mode
-        globeColor: isDark ? "#010302" : "#94a3b8",
+        globeColor: isDark ? "#010302" : "#64748b",
         showAtmosphere: true,
-        atmosphereColor: isDark ? "#10b981" : "#64748b",
+        atmosphereColor: isDark ? "#10b981" : "#475569",
         atmosphereAltitude: 0.1,
         emissive: isDark ? "#064e3b" : "#94a3b8",
         emissiveIntensity: isDark ? 0.3 : 0.2,
         shininess: 0.9,
         // Countries: Bright emerald in dark mode, Deep jewel green in light mode
-        polygonColor: isDark ? "rgba(52, 211, 153, 0.8)" : "rgba(6, 78, 59, 0.9)",
+        polygonColor: isDark ? "rgba(52, 211, 153, 0.8)" : "rgba(2, 44, 34, 0.9)",
         ambientLight: "#ffffff",
         directionalLeftLight: "#ffffff",
         directionalTopLight: "#ffffff",

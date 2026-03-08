@@ -7,22 +7,22 @@ export default function AreasDeAtuacaoPage() {
     const servicos = [
         {
             title: "Soluções Tecnológicas",
-            desc: "Desenvolvimento de software, sistemas integrados e soluções digitais para empresas e instituições públicas e privadas.",
+            desc: "Desenvolvimento de software customizado, sistemas de gestão empresarial, plataformas digitais, aplicações web e mobile, integração de sistemas e consultoria em transformação digital.",
             icon: Code,
         },
         {
             title: "Inovação Sustentável",
-            desc: "Projetos focados na preservação ambiental e aproveitamento racional da biodiversidade amazônica, impulsionando a bioeconomia.",
+            desc: "Desenvolvimento de bioprodutos, processos biotecnológicos, aproveitamento de recursos naturais, economia circular, tecnologias limpas e sustentabilidade ambiental.",
             icon: Leaf,
         },
         {
             title: "Pesquisa e Desenvolvimento",
-            desc: "P&D avançado integrando academia e mercado para resolver problemas complexos com embasamento científico de ponta.",
+            desc: "Projetos de pesquisa aplicada, desenvolvimento de protótipos, análises laboratoriais, estudos de viabilidade técnica, propriedade intelectual e transferência de tecnologia.",
             icon: FlaskConical,
         },
         {
             title: "Consultoria e Serviços",
-            desc: "Assessoria técnica especializada nas áreas de tecnologia da informação, telecomunicações e processos de inovação.",
+            desc: "Consultoria estratégica, gestão de projetos, análise de mercado, planejamento tecnológico, capacitação, treinamento e assessoria técnica especializada.",
             icon: Briefcase,
         },
     ]
@@ -30,17 +30,17 @@ export default function AreasDeAtuacaoPage() {
     const pilaresNegoio = [
         {
             title: "Projetos Personalizados",
-            desc: "Cada solução é moldada sob medida para as necessidades específicas do parceiro e do ecossistema local.",
+            desc: "Soluções desenvolvidas especificamente para atender às necessidades únicas de cada cliente e projeto.",
             icon: TrendingUp
         },
         {
             title: "Resultados Mensuráveis",
-            desc: "Foco total na entrega de valor real, monitorado através de métricas precisas de impacto e eficiência.",
+            desc: "Garantimos entregas com impacto qualificável e valor agregado para nossos parceiros e clientes.",
             icon: ShieldCheck
         },
         {
             title: "Parcerias Estratégicas",
-            desc: "Atuação em rede, conectando diferentes atores para maximizar o alcance e a efetividade das ações.",
+            desc: "Construímos relacionamentos duradouros baseados em confiança, transparência e excelência na execução de projetos.",
             icon: Handshake
         }
     ]

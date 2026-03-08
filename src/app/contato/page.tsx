@@ -40,8 +40,7 @@ export default function ContatoPage() {
                                         <div>
                                             <h4 className="font-semibold text-foreground text-lg mb-1">Nossa Localização</h4>
                                             <p className="text-muted-foreground leading-relaxed text-sm">
-                                                Avenida Perimetral da Ciência, km 1, S/N - Guamá, Belém - PA.
-                                                <br />Prédio Espaço Inovação, 3° andar.
+                                                Av. Perimetral da Ciência, S/N, KM 1, Parque de Ciência e Tecnologia Guamá.<br />Belém/PA, CEP 66075-750.
                                             </p>
                                         </div>
                                     </CardContent>
@@ -53,10 +52,27 @@ export default function ContatoPage() {
                                             <Mail className="h-5 w-5 text-accent" />
                                         </div>
                                         <div>
-                                            <h4 className="font-semibold text-foreground text-lg mb-1">Email</h4>
-                                            <a href="mailto:administrativo@isaci.org.br" className="text-muted-foreground hover:text-primary transition-colors text-sm">
-                                                administrativo@isaci.org.br
-                                            </a>
+                                            <h4 className="font-semibold text-foreground text-lg mb-2">E-mails</h4>
+                                            <div className="flex flex-col gap-1.5 text-sm text-muted-foreground mt-2">
+                                                <div className="flex flex-col">
+                                                    <span className="font-medium text-foreground text-xs uppercase tracking-wider">Administrativo</span>
+                                                    <a href="mailto:administrativo@isaci.org.br" className="hover:text-primary transition-colors">
+                                                        administrativo@isaci.org.br
+                                                    </a>
+                                                </div>
+                                                <div className="flex flex-col mt-1">
+                                                    <span className="font-medium text-foreground text-xs uppercase tracking-wider">Projetos</span>
+                                                    <a href="mailto:projetos@isaci.org.br" className="hover:text-primary transition-colors">
+                                                        projetos@isaci.org.br
+                                                    </a>
+                                                </div>
+                                                <div className="flex flex-col mt-1">
+                                                    <span className="font-medium text-foreground text-xs uppercase tracking-wider">Ouvidoria</span>
+                                                    <a href="mailto:transparencia@isaci.org.br" className="hover:text-primary transition-colors">
+                                                        transparencia@isaci.org.br
+                                                    </a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </CardContent>
                                 </Card>

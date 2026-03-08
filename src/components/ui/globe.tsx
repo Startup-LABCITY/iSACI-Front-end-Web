@@ -186,7 +186,7 @@ export function Globe({ globeConfig, data }: WorldProps) {
       })
       .arcDashLength(defaultProps.arcLength)
       .arcDashInitialGap(e => Number((e as { order: number }).order) || 0)
-      .arcDashGap(15)
+      .arcDashGap(2)
       .arcDashAnimateTime(e => defaultProps.arcTime);
 
     globeRef.current

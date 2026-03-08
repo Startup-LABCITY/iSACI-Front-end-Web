@@ -3,12 +3,14 @@
 import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Menu, X } from "lucide-react"
 import { Button, buttonVariants } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { cn } from "@/lib/utils"
+
+import { motion } from "framer-motion"
 
 const navLinks = [
     { href: "/sobre", label: "Sobre o iSACI" },
@@ -22,21 +24,45 @@ const navLinks = [
 export function Header() {
     const pathname = usePathname()
     const [open, setOpen] = useState(false)
+    const [isScrolled, setIsScrolled] = useState(false)
+    const isHome = pathname === "/"
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setIsScrolled(window.scrollY > 100)
+        }
+
+        // Reset on navigation
+        handleScroll()
+
+        window.addEventListener("scroll", handleScroll)
+        return () => window.removeEventListener("scroll", handleScroll)
+    }, [pathname])
+
+    const logoOpacity = isHome ? (isScrolled ? 1 : 0) : 1
+    const logoY = isHome ? (isScrolled ? 0 : -20) : 0
 
     return (
         <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-xl supports-[backdrop-filter]:bg-background/60">
             <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
                 {/* Logo */}
-                <Link href="/" className="flex items-center gap-2 group" aria-label="iSACI - Página inicial">
-                    <Image
-                        src="/assets/logo.png"
-                        alt="Logo iSACI"
-                        width={140}
-                        height={48}
-                        className="max-h-12 w-auto object-contain py-1 transition-transform group-hover:scale-105 dark:brightness-200"
-                        priority
-                    />
-                </Link>
+                <motion.div
+                    initial={false}
+                    animate={{ opacity: logoOpacity, y: logoY }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                    className="flex-shrink-0"
+                >
+                    <Link href="/" className="flex items-center gap-2 group" aria-label="iSACI - Página inicial">
+                        <Image
+                            src="/assets/logo.png"
+                            alt="Logo iSACI"
+                            width={140}
+                            height={48}
+                            className="max-h-12 w-auto object-contain py-1 transition-transform group-hover:scale-105 dark:brightness-200"
+                            priority
+                        />
+                    </Link>
+                </motion.div>
 
                 {/* Desktop Nav */}
                 <nav className="hidden lg:flex items-center gap-1" aria-label="Menu principal">
