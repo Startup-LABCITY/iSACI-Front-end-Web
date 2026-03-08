@@ -1,4 +1,3 @@
-```
 import { PageHero } from "@/components/page-hero"
 import { SectionHeader } from "@/components/section-header"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -7,9 +6,9 @@ import { Linkedin, Mail, MapPin, Phone, ExternalLink, Target, Globe, BookOpen, U
 
 // Ícone oficial do Lattes (CNPq) - Estilizado 'L' acadêmico
 const LattesIcon = ({ className }: { className?: string }) => (
-    <svg 
-        viewBox="0 0 448 512" 
-        fill="currentColor" 
+    <svg
+        viewBox="0 0 448 512"
+        fill="currentColor"
         className={className}
         xmlns="http://www.w3.org/2000/svg"
     >
@@ -377,7 +376,7 @@ export default function SobrePage() {
                     <div className="grid lg:grid-cols-2 gap-12">
                         <Accordion className="w-full space-y-4">
                             {objetivosEixos.slice(0, 2).map((item, index) => (
-                                <AccordionItem key={index} value={`item - ${ index } `} className="border bg-background/50 rounded-xl px-4">
+                                <AccordionItem key={index} value={`item - ${index} `} className="border bg-background/50 rounded-xl px-4">
                                     <AccordionTrigger className="text-lg font-semibold hover:no-underline">{item.eixo}</AccordionTrigger>
                                     <AccordionContent className="text-muted-foreground pb-4 space-y-2">
                                         <ul className="list-disc pl-5 space-y-2">
@@ -389,7 +388,7 @@ export default function SobrePage() {
                         </Accordion>
                         <Accordion className="w-full space-y-4">
                             {objetivosEixos.slice(2, 4).map((item, index) => (
-                                <AccordionItem key={index + 2} value={`item - ${ index + 2 } `} className="border bg-background/50 rounded-xl px-4">
+                                <AccordionItem key={index + 2} value={`item - ${index + 2} `} className="border bg-background/50 rounded-xl px-4">
                                     <AccordionTrigger className="text-lg font-semibold hover:no-underline">{item.eixo}</AccordionTrigger>
                                     <AccordionContent className="text-muted-foreground pb-4 space-y-2">
                                         <ul className="list-disc pl-5 space-y-2">
