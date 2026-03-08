@@ -263,22 +263,25 @@ export default function ProjetosPage() {
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <SectionHeader title="Outros Projetos" subtitle="Conheça mais iniciativas desenvolvidas pelo iSACI" />
 
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-12">
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-12 items-stretch">
                         {outrosProjetos.map((item, index) => (
-                            <Card key={index} className="bg-background/50 shadow-sm border-border flex flex-col">
-                                <CardHeader>
+                            <Card key={index} className="bg-background/50 shadow-sm border-border flex flex-col h-full">
+                                <CardHeader className="pb-4">
                                     <Badge variant="outline" className="w-fit mb-3">{item.tag}</Badge>
-                                    <CardTitle className="text-xl leading-tight">{item.title}</CardTitle>
+                                    <CardTitle className="text-xl leading-tight min-h-[3.5rem] flex items-center">
+                                        {item.title}
+                                    </CardTitle>
                                 </CardHeader>
-                                <CardContent className="flex-1">
-                                    <p className="text-sm text-muted-foreground leading-relaxed">
+                                <CardContent className="flex flex-col flex-1 pb-6">
+                                    <p className="text-sm text-muted-foreground leading-relaxed flex-1">
                                         {item.desc}
                                     </p>
-                                    <div className="mt-4 text-xs font-semibold text-foreground bg-primary/5 p-2 rounded border border-primary/10">
-                                        Cliente: {item.client}
+                                    <div className="mt-6 text-xs font-semibold text-foreground bg-primary/5 p-3 rounded-xl border border-primary/10">
+                                        <span className="text-muted-foreground block text-[10px] uppercase tracking-wider mb-1">Cliente</span>
+                                        {item.client}
                                     </div>
                                 </CardContent>
-                                <CardFooter>
+                                <CardFooter className="border-t border-border/50 py-4 mt-auto">
                                     <span className="text-xs font-bold text-primary uppercase tracking-wider">{item.period}</span>
                                 </CardFooter>
                             </Card>
