@@ -29,11 +29,11 @@ export function Footer() {
                     <div className="space-y-4">
                         <Link href="/" className="flex items-center gap-2">
                             <Image
-                                src="/logo.png"
+                                src="/assets/logo.png"
                                 alt="Logo iSACI"
                                 width={160}
                                 height={48}
-                                className="h-12 w-auto object-contain dark:invert"
+                                className="h-12 w-auto object-contain dark:brightness-200"
                             />
                         </Link>
                         <p className="text-sm text-muted-foreground leading-relaxed">

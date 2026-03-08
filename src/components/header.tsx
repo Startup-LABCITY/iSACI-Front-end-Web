@@ -29,11 +29,11 @@ export function Header() {
                 {/* Logo */}
                 <Link href="/" className="flex items-center gap-2 group" aria-label="iSACI - Página inicial">
                     <Image
-                        src="/logo.png"
+                        src="/assets/logo.png"
                         alt="Logo iSACI"
                         width={140}
-                        height={40}
-                        className="h-10 w-auto object-contain transition-transform group-hover:scale-105 dark:brightness-200"
+                        height={48}
+                        className="max-h-12 w-auto object-contain py-1 transition-transform group-hover:scale-105 dark:brightness-200"
                         priority
                     />
                 </Link>
@@ -80,7 +80,7 @@ export function Header() {
                                     className="flex items-center gap-2"
                                 >
                                     <Image
-                                        src="/logo.png"
+                                        src="/assets/logo.png"
                                         alt="Logo iSACI"
                                         width={140}
                                         height={40}

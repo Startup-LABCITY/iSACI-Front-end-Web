@@ -3,6 +3,7 @@ import Link from "next/link"
 import { ArrowRight, Leaf, Lightbulb, Users } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+import { GlobeDemo } from "@/components/globe-demo"
 import { ShaderBackground } from "@/components/shader-background"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { StatsCounter } from "@/components/stats-counter"
@@ -19,42 +20,54 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
-      <section className="relative overflow-hidden">
-        <ShaderBackground />
+      <section className="relative overflow-hidden bg-background lg:min-h-[calc(100vh-4rem)] flex items-center">
+        {/* Subtle, clean interactive background */}
+        <div className="absolute inset-0 z-0 opacity-80 pointer-events-auto">
+          <ShaderBackground />
+        </div>
 
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-20 pb-24 sm:pt-32 sm:pb-36 flex flex-col items-center text-center">
-          <div className="mb-10 animate-in fade-in zoom-in-95 slide-in-from-bottom-8 duration-1000">
-            <Image
-              src="/logo.png"
-              alt="iSACI Logo"
-              width={300}
-              height={120}
-              className="h-20 sm:h-28 w-auto object-contain drop-shadow-xl dark:brightness-200 hover:scale-105 transition-transform duration-500"
-              priority
-            />
+        {/* Absolute Globe for Desktop: Hero Cropped */}
+        <div className="absolute inset-y-0 right-0 w-[800px] lg:w-[1000px] hidden lg:flex items-center justify-end pointer-events-auto z-0 overflow-visible translate-x-[20%] lg:translate-x-[25%]">
+          <GlobeDemo />
+        </div>
+
+        <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center justify-between min-h-[calc(100vh-4rem)] lg:min-h-0 pt-16 lg:pt-0 pb-16 gap-12 lg:gap-8 z-10 pointer-events-none">
+
+          {/* Left Column: Text and Logo */}
+          <div className="flex flex-col items-center lg:items-start text-center lg:text-left w-full lg:w-6/12 z-10 pointer-events-auto">
+            <div className="mb-8 animate-in fade-in zoom-in-95 slide-in-from-bottom-8 duration-1000">
+              <Image
+                src="/assets/logo.png"
+                alt="iSACI Logo"
+                width={320}
+                height={120}
+                className="h-24 sm:h-32 w-auto object-contain drop-shadow-xl dark:brightness-200 hover:scale-105 transition-transform duration-500 origin-center lg:origin-left"
+                priority
+              />
+            </div>
+
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground animate-in fade-in slide-in-from-bottom-6 duration-700 delay-300">
+              O motor da inovação na <span className="text-primary drop-shadow-sm">Amazônia</span>
+            </h1>
+
+            <p className="mt-6 text-lg sm:text-xl text-muted-foreground leading-relaxed animate-in fade-in slide-in-from-bottom-8 duration-700 delay-500 font-medium max-w-xl">
+              Desenvolvemos soluções sustentáveis para os desafios da região, transformando conhecimento científico em progresso socioeconômico e fortalecendo a bioeconomia.
+            </p>
+
+            <div className="mt-8 flex flex-col sm:flex-row justify-center lg:justify-start gap-4 w-full animate-in fade-in slide-in-from-bottom-10 duration-700 delay-700">
+              <Button size="lg" className="h-12 px-8 text-base bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-full w-full sm:w-auto mx-auto lg:mx-0" render={<Link href="/projetos" />}>
+                Conheça Nossos Projetos
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+              <Button variant="outline" size="lg" className="h-12 px-8 text-base font-semibold rounded-full border-primary/20 hover:bg-primary/5 w-full sm:w-auto mx-auto lg:mx-0" render={<Link href="/sobre" />}>
+                Sobre o Instituto
+              </Button>
+            </div>
           </div>
 
-          <div className="inline-flex items-center rounded-full border border-primary/30 bg-background/50 backdrop-blur-md px-4 py-1.5 text-sm font-semibold text-primary mb-8 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-150 fill-mode-both shadow-sm">
-            <Leaf className="mr-2 h-4 w-4" />
-            <span>Ciência para o Futuro da Amazônia</span>
-          </div>
-
-          <h1 className="max-w-4xl text-5xl font-extrabold tracking-tight text-foreground sm:text-6xl lg:text-7xl animate-in fade-in slide-in-from-bottom-6 duration-700 delay-300 fill-mode-both">
-            O motor da inovação na <span className="text-primary drop-shadow-sm">Amazônia</span>
-          </h1>
-
-          <p className="mt-8 max-w-2xl text-xl text-muted-foreground leading-relaxed animate-in fade-in slide-in-from-bottom-8 duration-700 delay-500 fill-mode-both font-medium">
-            Desenvolvemos soluções sustentáveis para os desafios da região, transformando conhecimento científico em progresso socioeconômico e fortalecendo a bioeconomia.
-          </p>
-
-          <div className="mt-10 flex flex-col sm:flex-row gap-4 animate-in fade-in slide-in-from-bottom-10 duration-700 delay-700 fill-mode-both">
-            <Button size="lg" className="h-12 px-8 text-base bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-full" render={<Link href="/projetos" />}>
-              Conheça Nossos Projetos
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
-            <Button variant="outline" size="lg" className="h-12 px-8 text-base font-semibold rounded-full border-primary/20 hover:bg-primary/5" render={<Link href="/sobre" />}>
-              Sobre o Instituto
-            </Button>
+          {/* Right Column: Globe Animation (Desktop Only) */}
+          <div className="w-full flex lg:hidden justify-center items-center pointer-events-auto mt-[-4rem] sm:mt-0 z-0">
+            {/* Globe removed from mobile view per user request */}
           </div>
         </div>
       </section>
@@ -189,14 +202,14 @@ export default function Home() {
             A força do iSACI reside em suas parcerias. Trabalhamos lado a lado com empresas, governos e a academia para transformar ideias em resultados e enfrentar os desafios da Amazônia.
           </p>
 
-          <div className="flex flex-wrap justify-center gap-8 md:gap-16 opacity-80 mix-blend-plus-lighter grayscale contrast-200 mb-16">
+          <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-70 mb-16 text-primary-foreground/90 font-medium">
             {/* simple text placeholders for logos */}
-            <div className="text-2xl font-bold tracking-widest">UNIFESSPA</div>
-            <div className="text-2xl font-bold tracking-widest">GOVERNO DO ESTADO</div>
-            <div className="text-2xl font-bold tracking-widest">U.PORTO</div>
-            <div className="text-2xl font-bold tracking-widest">CAPES</div>
-            <div className="text-2xl font-bold tracking-widest">ERICSSON</div>
-            <div className="text-2xl font-bold tracking-widest">LUT</div>
+            <div className="text-xl md:text-2xl font-bold tracking-widest">UNIFESSPA</div>
+            <div className="text-xl md:text-2xl font-bold tracking-widest">GOVERNO DO ESTADO</div>
+            <div className="text-xl md:text-2xl font-bold tracking-widest">U.PORTO</div>
+            <div className="text-xl md:text-2xl font-bold tracking-widest">CAPES</div>
+            <div className="text-xl md:text-2xl font-bold tracking-widest">ERICSSON</div>
+            <div className="text-xl md:text-2xl font-bold tracking-widest">LUT</div>
           </div>
 
           <div className="bg-background/10 backdrop-blur-md border border-primary-foreground/20 rounded-3xl p-8 sm:p-12 max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-8 text-left">
