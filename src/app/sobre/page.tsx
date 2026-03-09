@@ -192,42 +192,55 @@ export default function SobrePage() {
                     {/* Sub-bloco: Diretoria Executiva */}
                     <div className="mt-20">
                         <div className="flex items-center gap-4 mb-12">
-                            <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-primary">Diretoria Executiva</h3>
-                            <div className="h-px flex-1 bg-primary/20" />
+                            <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-[#88b04b]">Diretoria Executiva</h3>
+                            <div className="h-px flex-1 bg-[#88b04b]/20" />
                         </div>
                         <div className="grid md:grid-cols-3 gap-8">
                             {diretoria.map((membro, i) => (
-                                <Card key={i} className="group flex flex-col items-center p-8 border-t-4 border-t-primary border-x-border/10 border-b-border/10 bg-background/50 backdrop-blur-md shadow-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+                                <Card key={i} className="group relative flex flex-col items-center p-8 border-none bg-background shadow-[0_4px_20px_-1px_rgba(0,0,0,0.1)] transition-all duration-300 hover:shadow-[0_8px_30px_-5px_rgba(0,0,0,0.15)] hover:-translate-y-1 overflow-hidden">
+                                    {/* Borda superior característica do INCT */}
+                                    <div className="absolute top-0 left-0 right-0 h-1 bg-[#88b04b]" />
+
                                     <div className="relative w-32 h-32 mb-6">
-                                        <div className="absolute inset-0 rounded-full border-2 border-primary/20 group-hover:border-primary/50 transition-colors" />
-                                        <div className="absolute inset-1 rounded-full overflow-hidden bg-muted">
+                                        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-primary/5 blur-xl rounded-full" />
+                                        <div className="relative h-full w-full rounded-full overflow-hidden border-4 border-white shadow-sm ring-1 ring-black/5">
                                             <Image
                                                 src={membro.image}
                                                 alt={membro.name}
                                                 fill
-                                                className="object-cover transition-transform duration-700 group-hover:scale-110"
+                                                className="object-cover transition-transform duration-700 group-hover:scale-105"
                                             />
                                         </div>
                                     </div>
-                                    <div className="text-center flex-1 flex flex-col">
-                                        <h4 className="text-lg font-bold text-foreground mb-1 group-hover:text-primary transition-colors">{membro.name}</h4>
-                                        <p className="text-xs text-muted-foreground font-medium mb-4">{membro.role}</p>
-                                        <p className="text-sm text-center text-muted-foreground/80 leading-relaxed flex-1 italic">
+
+                                    <div className="text-center flex-1 flex flex-col items-center">
+                                        <h4 className="text-lg font-bold text-foreground mb-1">{membro.name}</h4>
+                                        <p className="text-sm text-[#88b04b] font-semibold mb-4">{membro.role}</p>
+                                        <div className="flex items-center gap-2 text-muted-foreground/80 mb-6 text-sm">
+                                            <Mail className="h-3.5 w-3.5" />
+                                            <span>contato@isaci.org.br</span>
+                                        </div>
+                                        <p className="text-sm text-center text-muted-foreground/70 leading-relaxed italic max-w-[240px]">
                                             "{membro.bio}"
                                         </p>
-                                        <div className="flex justify-center gap-4 mt-6 pt-4 border-t border-primary/10">
-                                            {membro.linkedin && (
-                                                <a href={membro.linkedin} target="_blank" rel="noreferrer" className="text-muted-foreground/60 hover:text-primary transition-colors">
-                                                    <Linkedin className="h-5 w-5" />
-                                                </a>
-                                            )}
-                                            {membro.lattes && (
-                                                <a href={membro.lattes} target="_blank" rel="noreferrer" className="text-teal-600/70 hover:text-teal-600 transition-colors" title="Currículo Lattes">
-                                                    <LattesIcon className="h-5 w-5" />
-                                                </a>
-                                            )}
-                                        </div>
                                     </div>
+
+                                    {/* Lattes icon in the exact corner as requested */}
+                                    <div className="absolute bottom-4 right-4 text-[#88b04b]/40 group-hover:text-[#88b04b] transition-colors">
+                                        {membro.lattes && (
+                                            <a href={membro.lattes} target="_blank" rel="noreferrer" title="Currículo Lattes">
+                                                <LattesIcon className="h-5 w-5" />
+                                            </a>
+                                        )}
+                                    </div>
+
+                                    {membro.linkedin && (
+                                        <div className="absolute bottom-4 left-4 text-muted-foreground/30 hover:text-primary transition-colors">
+                                            <a href={membro.linkedin} target="_blank" rel="noreferrer">
+                                                <Linkedin className="h-4 w-4" />
+                                            </a>
+                                        </div>
+                                    )}
                                 </Card>
                             ))}
                         </div>
@@ -236,15 +249,16 @@ export default function SobrePage() {
                     {/* Sub-bloco: Instituidores */}
                     <div className="mt-28">
                         <div className="flex items-center gap-4 mb-10">
-                            <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-primary">Conselho de Instituidores</h3>
-                            <div className="h-px flex-1 bg-primary/20" />
+                            <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-[#88b04b]">Conselho de Instituidores</h3>
+                            <div className="h-px flex-1 bg-[#88b04b]/20" />
                         </div>
                         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
                             {instituidores.map((membro, i) => (
-                                <Card key={i} className="group flex flex-col items-center p-6 border-t-[3px] border-t-primary/60 border-x-border/5 border-b-border/5 bg-background shadow-xs hover:shadow-md transition-all duration-300">
+                                <Card key={i} className="group relative flex flex-col items-center p-6 border-none bg-background shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07)] hover:shadow-[0_10px_25px_-5px_rgba(0,0,0,0.1)] transition-all duration-300">
+                                    <div className="absolute top-0 left-0 right-0 h-[3px] bg-[#88b04b]/70" />
+
                                     <div className="relative w-24 h-24 mb-4">
-                                        <div className="absolute inset-0 rounded-full border border-primary/10 group-hover:border-primary/30 transition-colors" />
-                                        <div className="absolute inset-[3px] rounded-full overflow-hidden bg-muted">
+                                        <div className="absolute inset-0 rounded-full overflow-hidden border-2 border-white shadow-xs ring-1 ring-black/5">
                                             <Image
                                                 src={membro.image}
                                                 alt={membro.name}
@@ -253,24 +267,25 @@ export default function SobrePage() {
                                             />
                                         </div>
                                     </div>
-                                    <div className="text-center flex-1 flex flex-col">
+                                    <div className="text-center flex-1 flex flex-col items-center">
                                         <h4 className="text-[15px] font-bold text-foreground leading-tight mb-2 min-h-[2.5rem] flex items-center justify-center">{membro.name}</h4>
-                                        <p className="text-[11px] text-muted-foreground uppercase tracking-wider mb-4">Instituidor</p>
-                                        <p className="text-xs text-muted-foreground/70 mb-6 italic line-clamp-3">
+                                        <p className="text-[11px] text-muted-foreground uppercase tracking-wider mb-2">Instituidor</p>
+                                        <div className="flex items-center gap-1.5 text-muted-foreground/60 mb-4 text-[11px]">
+                                            <Mail className="h-3 w-3" />
+                                            <span className="truncate max-w-[120px]">isaci@ufpa.br</span>
+                                        </div>
+                                        <p className="text-xs text-muted-foreground/60 mb-6 italic line-clamp-3">
                                             {membro.bio}
                                         </p>
-                                        <div className="flex justify-center gap-3 mt-auto pt-3 border-t border-border/30">
-                                            {membro.linkedin && (
-                                                <a href={membro.linkedin} target="_blank" rel="noreferrer" className="text-muted-foreground/40 hover:text-primary transition-colors">
-                                                    <Linkedin className="h-4 w-4" />
-                                                </a>
-                                            )}
-                                            {membro.lattes && (
-                                                <a href={membro.lattes} target="_blank" rel="noreferrer" className="text-teal-600/50 hover:text-teal-600 transition-colors" title="Currículo Lattes">
-                                                    <LattesIcon className="h-4 w-4" />
-                                                </a>
-                                            )}
-                                        </div>
+                                    </div>
+
+                                    {/* Lattes icon in the absolute bottom-right corner */}
+                                    <div className="absolute bottom-3 right-3 text-[#88b04b]/30 group-hover:text-[#88b04b] transition-colors">
+                                        {membro.lattes && (
+                                            <a href={membro.lattes} target="_blank" rel="noreferrer" title="Currículo Lattes">
+                                                <LattesIcon className="h-4 w-4" />
+                                            </a>
+                                        )}
                                     </div>
                                 </Card>
                             ))}
@@ -280,13 +295,14 @@ export default function SobrePage() {
                     {/* Sub-bloco: Associados */}
                     <div className="mt-24">
                         <div className="flex items-center gap-4 mb-8">
-                            <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/60">Apoio Institucional</h3>
-                            <div className="h-px flex-1 bg-muted/30" />
+                            <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-[#88b04b]/60">Apoio Institucional</h3>
+                            <div className="h-px flex-1 bg-[#88b04b]/10" />
                         </div>
                         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                             {associados.map((assoc, i) => (
-                                <div key={i} className="flex items-center gap-5 p-5 rounded-2xl border border-border/30 bg-background/20 hover:bg-background/40 transition-all group">
-                                    <div className="relative h-14 w-14 shrink-0 rounded-full overflow-hidden border border-primary/10 group-hover:border-primary/30 transition-colors">
+                                <div key={i} className="relative flex items-center gap-5 p-5 rounded-2xl bg-white shadow-sm border border-black/5 hover:shadow-md transition-all group overflow-hidden">
+                                    <div className="absolute top-0 left-0 bottom-0 w-1 bg-[#88b04b]/40 group-hover:bg-[#88b04b] transition-colors" />
+                                    <div className="relative h-14 w-14 shrink-0 rounded-full overflow-hidden shadow-sm border-2 border-white ring-1 ring-black/5">
                                         <Image
                                             src={assoc.image}
                                             alt={assoc.name}
@@ -295,13 +311,15 @@ export default function SobrePage() {
                                         />
                                     </div>
                                     <div className="min-w-0">
-                                        <div className="flex items-center gap-2">
-                                            <h4 className="text-sm font-bold text-foreground group-hover:text-primary transition-colors truncate">{assoc.name}</h4>
-                                            <a href={assoc.linkedin} target="_blank" rel="noreferrer" className="text-muted-foreground/40 hover:text-primary transition-colors">
+                                        <h4 className="text-sm font-bold text-foreground group-hover:text-[#88b04b] transition-colors truncate">{assoc.name}</h4>
+                                        <p className="text-[10px] text-[#88b04b] font-bold uppercase tracking-wider">{assoc.role}</p>
+                                        <div className="flex items-center gap-2 mt-2">
+                                            <a href={assoc.linkedin} target="_blank" rel="noreferrer" className="text-muted-foreground/30 hover:text-primary transition-colors">
                                                 <Linkedin className="h-3 w-3" />
                                             </a>
+                                            <div className="h-3 w-px bg-border" />
+                                            <Mail className="h-3 w-3 text-muted-foreground/30" />
                                         </div>
-                                        <p className="text-[10px] text-primary/80 font-semibold uppercase tracking-wider">{assoc.role}</p>
                                     </div>
                                 </div>
                             ))}

@@ -17,9 +17,9 @@ export function ShaderBackground() {
         let animationFrameId: number
 
         const isDark = resolvedTheme === "dark"
-        // High contrast for light mode (deep greens), subtle for dark mode
-        const strokeBase = isDark ? "rgba(16, 185, 129, 0.08)" : "rgba(6, 78, 59, 0.25)" // dark emerald
-        const nodeBase = isDark ? "rgba(16, 185, 129, 0.25)" : "rgba(6, 78, 59, 0.45)"
+        // Increased opacity slightly to make the logo shape unmistakable while remaining a background element
+        const strokeBase = isDark ? "rgba(16, 185, 129, 0.12)" : "rgba(6, 78, 59, 0.18)"
+        const nodeBase = isDark ? "rgba(16, 185, 129, 0.20)" : "rgba(6, 78, 59, 0.28)"
 
         // Amazon Nature + Tech Connection colors (richer in light mode)
         const pulseColors = isDark
@@ -58,6 +58,171 @@ export function ShaderBackground() {
         let nodes: Node[] = []
         let edges: Edge[] = []
         let pulses: Pulse[] = []
+        let logoPoints: { x: number, y: number }[] = []
+
+        let logoWidth = 1
+        let logoHeight = 1
+
+        const loadLogo = () => {
+            const img = new Image()
+            img.src = "/assets/logo.png"
+            img.onload = () => {
+                const offCanvas = document.createElement("canvas")
+                const offCtx = offCanvas.getContext("2d", { willReadFrequently: true })
+                if (!offCtx) return
+
+                // Update the effective aspect ratio for the scale calculations
+                logoWidth = img.width / img.height
+                logoHeight = 1
+
+                // Scale down slightly to improve loop performance
+                const sampleWidth = Math.min(img.width, 1000)
+                const sampleHeight = sampleWidth / logoWidth
+                offCanvas.width = sampleWidth
+                offCanvas.height = sampleHeight
+
+                // Draw the FULL image (icon + text)
+                offCtx.drawImage(img, 0, 0, img.width, img.height, 0, 0, sampleWidth, sampleHeight)
+                const data = offCtx.getImageData(0, 0, sampleWidth, sampleHeight).data
+
+                logoPoints = []
+
+                let logoBounds = { minY: 9999, maxY: 0 }
+                let subtitleBounds = { minY: 9999, maxY: 0 }
+                let gapStarts = 0, gapEnds = 0
+                let inLogo = false, inSubtitle = false
+
+                // Basic row scanning to find the gap between logo and subtitle
+                for (let y = 0; y < sampleHeight; y++) {
+                    let hasPixels = false
+                    for (let x = 0; x < sampleWidth; x++) {
+                        if (data[(y * sampleWidth + x) * 4 + 3] > 128) {
+                            hasPixels = true; break;
+                        }
+                    }
+                    if (hasPixels) {
+                        if (!inSubtitle) {
+                            if (!inLogo) { inLogo = true; logoBounds.minY = y; }
+                            logoBounds.maxY = y;
+                        } else {
+                            subtitleBounds.maxY = y;
+                        }
+                    } else {
+                        if (inLogo && !inSubtitle && y > logoBounds.maxY + 5) { // 5px gap threshold
+                            inSubtitle = true;
+                            gapStarts = logoBounds.maxY;
+                            gapEnds = y;
+                            subtitleBounds.minY = y;
+                        }
+                    }
+                }
+                console.log(`[LOGO DETECT] Image height: ${sampleHeight}`)
+                console.log(`[LOGO DETECT] Logo section: ${logoBounds.minY} to ${logoBounds.maxY} (Ratio: ${(logoBounds.maxY / sampleHeight).toFixed(3)})`)
+                console.log(`[LOGO DETECT] Subtitle section: ${subtitleBounds.minY} to ${subtitleBounds.maxY} (Ratio: ${(subtitleBounds.minY / sampleHeight).toFixed(3)})`)
+
+                // Calculate the true vertical center of the strictly cropped logo section
+                const cropCenterY = (logoBounds.minY + logoBounds.maxY) / 2 / sampleHeight;
+
+                for (let y = 0; y < sampleHeight; y += 4) {
+                    for (let x = 0; x < sampleWidth; x += 4) {
+                        const alpha = data[(y * sampleWidth + x) * 4 + 3]
+                        if (alpha > 128) {
+                            // Perfect crop dynamically identified by the gap
+                            if (y > logoBounds.maxY + 2) {
+                                continue
+                            }
+
+                            logoPoints.push({
+                                // Normalize between 0 and 1 relative to the full image dimensions
+                                x: x / sampleWidth,
+                                // Offset Y so the cropped logo acts as if it is perfectly vertically centered at 0
+                                y: (y / sampleHeight) - cropCenterY
+                            })
+                        }
+                    }
+                }
+
+                initNetwork()
+            }
+        }
+
+        const initNetwork = () => {
+            // Density: EXTREMELY High density to ensure the full "iSACI" text is fully solid and legible
+            const N = 2200
+            nodes = []
+            edges = []
+            pulses = []
+
+            // 1. Generate nodes (strictly from icon points)
+            for (let i = 0; i < N; i++) {
+                let x = 0, y = 0, valid = false
+
+                const isLogoNode = logoPoints.length > 0
+
+                for (let attempts = 0; attempts < 100; attempts++) {
+                    if (isLogoNode) {
+                        const lp = logoPoints[Math.floor(Math.random() * logoPoints.length)]
+
+                        // Scale based on WIDTH because the full logo is very wide.
+                        const targetWidth = width * 0.75
+                        const renderScale = targetWidth / logoWidth
+
+                        // Position it so it spans beautifully across the screen
+                        y = (height / 2) + lp.y * renderScale
+                        x = (width * 0.05) + lp.x * targetWidth
+
+                        // Even smaller organic jitter for sharper text
+                        x += (Math.random() - 0.5) * 4
+                        y += (Math.random() - 0.5) * 4
+                    } else {
+                        x = Math.random() * width
+                        y = Math.random() * height
+                    }
+
+                    valid = true
+                    for (const n of nodes) {
+                        // Very tight spacing for extreme density
+                        if (Math.hypot(n.x - x, n.y - y) < 4) { valid = false; break; }
+                    }
+                    if (valid) break
+                }
+
+                nodes.push({
+                    x, y,
+                    baseX: x, baseY: y,
+                    vx: (Math.random() - 0.5) * 0.1,
+                    vy: (Math.random() - 0.5) * 0.1,
+                    edges: []
+                })
+            }
+
+            // 2. Connect nodes organically
+            nodes.forEach(node => {
+                const sorted = [...nodes]
+                    .filter(n => n !== node)
+                    .sort((a, b) => Math.hypot(a.x - node.x, a.y - node.y) - Math.hypot(b.x - node.x, b.y - node.y))
+
+                // Connect to 1-3 nearest neighbors
+                const connections = 1 + Math.floor(Math.random() * 2)
+                for (let j = 0; j < connections; j++) {
+                    const neighbor = sorted[j]
+                    if (neighbor) {
+                        const exists = edges.find(e => (e.n1 === node && e.n2 === neighbor) || (e.n1 === neighbor && e.n2 === node))
+                        const dist = Math.hypot(node.x - neighbor.x, node.y - neighbor.y)
+
+                        // CRITICAL FIX: Limit connection distance tightly (120 instead of 300) 
+                        // so lines don't cross empty space and "fill in" the holes of the logo shape.
+                        if (!exists && dist < 120) {
+                            const curveOffset = (Math.random() - 0.5) * 0.2
+                            const edge = { n1: node, n2: neighbor, curveOffset }
+                            edges.push(edge)
+                            node.edges.push(edge)
+                            neighbor.edges.push(edge)
+                        }
+                    }
+                }
+            })
+        }
 
         const resizeCanvas = () => {
             const parent = canvas.parentElement
@@ -71,62 +236,11 @@ export function ShaderBackground() {
             canvas.width = width
             canvas.height = height
 
-            initNetwork()
-        }
-
-        const initNetwork = () => {
-            // Density: Drastically reduced for a clean, sparse, premium feel. 1 node per 60,000 pixels
-            const N = Math.max(15, Math.floor((width * height) / 60000))
-            nodes = []
-            edges = []
-            pulses = []
-
-            // 1. Generate nodes with a minimum spacing
-            for (let i = 0; i < N; i++) {
-                let x = 0, y = 0, valid = false
-                for (let attempts = 0; attempts < 15; attempts++) {
-                    x = Math.random() * width
-                    y = Math.random() * height
-                    valid = true
-                    for (const n of nodes) {
-                        if (Math.hypot(n.x - x, n.y - y) < 80) { valid = false; break; }
-                    }
-                    if (valid) break
-                }
-
-                nodes.push({
-                    x, y,
-                    baseX: x, baseY: y,
-                    vx: (Math.random() - 0.5) * 0.1, // Slower drift
-                    vy: (Math.random() - 0.5) * 0.1, // Slower drift
-                    edges: []
-                })
+            if (logoPoints.length === 0) {
+                loadLogo()
+            } else {
+                initNetwork()
             }
-
-            // 2. Connect nodes organically
-            nodes.forEach(node => {
-                // Find ~2 closest neighbors for sparse elegant lines
-                const sorted = [...nodes]
-                    .filter(n => n !== node)
-                    .sort((a, b) => Math.hypot(a.x - node.x, a.y - node.y) - Math.hypot(b.x - node.x, b.y - node.y))
-
-                for (let j = 0; j < 2; j++) {
-                    const neighbor = sorted[j]
-                    if (neighbor) {
-                        const exists = edges.find(e => (e.n1 === node && e.n2 === neighbor) || (e.n1 === neighbor && e.n2 === node))
-                        const dist = Math.hypot(node.x - neighbor.x, node.y - neighbor.y)
-
-                        // Extended reach but fewer lines overall
-                        if (!exists && dist < 450) {
-                            const curveOffset = (Math.random() - 0.5) * 0.3 // Milder curves
-                            const edge = { n1: node, n2: neighbor, curveOffset }
-                            edges.push(edge)
-                            node.edges.push(edge)
-                            neighbor.edges.push(edge)
-                        }
-                    }
-                }
-            })
         }
 
         window.addEventListener("resize", resizeCanvas)
@@ -195,7 +309,7 @@ export function ShaderBackground() {
             })
 
             // Draw Edges (Organic Synapses)
-            ctx.lineWidth = 1.5
+            ctx.lineWidth = 1.0 // Thinner lines for higher density
             edges.forEach(edge => {
                 const cp = getControlPoint(edge)
                 ctx.beginPath()
@@ -208,7 +322,7 @@ export function ShaderBackground() {
             // Draw Nodes
             nodes.forEach(n => {
                 ctx.beginPath()
-                ctx.arc(n.x, n.y, 2.5, 0, Math.PI * 2)
+                ctx.arc(n.x, n.y, 1.5, 0, Math.PI * 2) // Smaller nodes
                 ctx.fillStyle = nodeBase
                 ctx.fill()
             })

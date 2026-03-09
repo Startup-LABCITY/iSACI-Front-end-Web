@@ -12,6 +12,14 @@ import { cn } from "@/lib/utils"
 
 import { motion } from "framer-motion"
 
+import {
+    NavigationMenu,
+    NavigationMenuItem,
+    NavigationMenuLink,
+    NavigationMenuList,
+    navigationMenuTriggerStyle,
+} from "@/components/ui/navigation-menu"
+
 const navLinks = [
     { href: "/sobre", label: "Sobre o iSACI" },
     { href: "/projetos", label: "Projetos e Portfólio" },
@@ -65,22 +73,30 @@ export function Header() {
                 </motion.div>
 
                 {/* Desktop Nav */}
-                <nav className="hidden lg:flex items-center gap-1" aria-label="Menu principal">
-                    {navLinks.map((link) => (
-                        <Link
-                            key={link.href}
-                            href={link.href}
-                            className={cn(
-                                "px-3 py-2 text-sm font-medium rounded-md transition-colors",
-                                pathname === link.href
-                                    ? "text-primary bg-primary/10"
-                                    : "text-muted-foreground hover:text-foreground hover:bg-muted"
-                            )}
-                        >
-                            {link.label}
-                        </Link>
-                    ))}
-                </nav>
+                <div className="hidden lg:flex items-center" aria-label="Menu principal">
+                    <NavigationMenu>
+                        <NavigationMenuList className="gap-1">
+                            {navLinks.map((link) => (
+                                <NavigationMenuItem key={link.href}>
+                                    <Link href={link.href} legacyBehavior passHref>
+                                        <NavigationMenuLink
+                                            active={pathname === link.href}
+                                            className={cn(
+                                                navigationMenuTriggerStyle(),
+                                                "bg-transparent font-semibold",
+                                                pathname === link.href
+                                                    ? "text-primary bg-primary/10 hover:bg-primary/15"
+                                                    : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                                            )}
+                                        >
+                                            {link.label}
+                                        </NavigationMenuLink>
+                                    </Link>
+                                </NavigationMenuItem>
+                            ))}
+                        </NavigationMenuList>
+                    </NavigationMenu>
+                </div>
 
                 {/* Desktop Actions */}
                 <div className="hidden lg:flex items-center gap-2">

@@ -2,6 +2,8 @@
 
 import { useEffect, useState, useRef } from "react"
 
+import { Card, CardContent } from "@/components/ui/card"
+
 interface StatItemProps {
     value: string
     label: string
@@ -45,13 +47,15 @@ function StatItem({ value, label }: StatItemProps) {
     }, [targetNumber, hasAnimated])
 
     return (
-        <div ref={ref} className="text-center p-6">
-            <div className="text-4xl sm:text-5xl font-bold text-primary tabular-nums">
-                {count}
-                {suffix}
-            </div>
-            <p className="mt-2 text-sm text-muted-foreground font-medium">{label}</p>
-        </div>
+        <Card ref={ref} className="text-center p-6 bg-card/60 backdrop-blur-xl border border-border/50 hover:border-primary/50 transition-all duration-300 shadow-sm">
+            <CardContent className="p-0 flex flex-col items-center justify-center">
+                <div className="text-4xl sm:text-5xl font-bold text-primary tabular-nums tracking-tight">
+                    {count}
+                    {suffix}
+                </div>
+                <p className="mt-3 text-sm text-foreground/80 font-semibold uppercase tracking-wider">{label}</p>
+            </CardContent>
+        </Card>
     )
 }
 
