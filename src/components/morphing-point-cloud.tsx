@@ -66,6 +66,9 @@ export function MorphingPointCloud() {
     useEffect(() => {
         if (initialShape === null) return;
 
+        // Block heavy animation execution entirely on mobile devices
+        if (typeof window !== "undefined" && window.innerWidth < 1024) return;
+
         const canvas = canvasRef.current;
         if (!canvas) return;
         const ctx = canvas.getContext("2d", { willReadFrequently: true });
@@ -157,8 +160,8 @@ export function MorphingPointCloud() {
 
                 const { data } = offCtx.getImageData(0, 0, w, h);
 
-                // High-resolution sampling for complex organic shapes
-                const sampleGap = isDesktop ? 2 : 3;
+                // Optimized sampling gap for significantly better performance
+                const sampleGap = isDesktop ? 6 : 8;
                 for (let y = 0; y < h; y += sampleGap) {
                     for (let x = 0; x < w; x += sampleGap) {
                         const index = (y * w + x) * 4;
@@ -191,8 +194,9 @@ export function MorphingPointCloud() {
                 }
             });
 
-            // --- IMPROVED PROCEDURAL SUMAÚMA GENERATION ---
-            const numTreePts = 60000; // Increased density for premium look
+            // --- PROCEDURAL SUMAÚMA GENERATION ---
+            // Drastically reduced particle count to improve performance on all browsers
+            const numTreePts = 12000;
             const treePoints: { x: number, y: number, c: string, a: number, isTrunk: boolean }[] = [];
 
             const treeBottom = dy + shapeDrawHeight - 30; // Lifted slightly for more room
@@ -231,8 +235,8 @@ export function MorphingPointCloud() {
                 const branchEndX = centerX + Math.cos(angle) * len;
                 const branchEndY = treeTop + Math.sin(angle) * len;
 
-                for (let j = 0; j < 1000; j++) {
-                    const t = j / 1000;
+                for (let j = 0; j < 300; j++) {
+                    const t = j / 300;
                     const b_width = (trunkTopWidth * (1 - t)) + 8;
                     treePoints.push({
                         x: centerX + Math.cos(angle) * len * t + (Math.random() - 0.5) * b_width,
@@ -271,7 +275,7 @@ export function MorphingPointCloud() {
             const logoPts = shapePoints[2];
 
             // TARGETS PAD LOOP
-            const maxPoints = Math.max(logoPts.length, shapePoints[0].length, shapePoints[1].length, treePoints.length, 60000);
+            const maxPoints = Math.max(logoPts.length, shapePoints[0].length, shapePoints[1].length, treePoints.length, numTreePts);
 
             // Pad the shape arrays
             ([logoPts, shapePoints[0], shapePoints[1], treePoints] as any[][]).forEach(arr => {
@@ -431,6 +435,8 @@ export function MorphingPointCloud() {
         <div
             className="w-full h-full relative overflow-hidden cursor-pointer flex items-center justify-center rounded-2xl"
             onClick={() => {
+                if (typeof window !== "undefined" && window.innerWidth < 1024) return;
+
                 if (assembled) {
                     setInitialShape((prev) => (prev !== null ? (prev + 1) % 3 : 0));
                     setAssembled(false);
@@ -440,9 +446,15 @@ export function MorphingPointCloud() {
             }}
             title={assembled ? "Clique para ver a próxima imagem" : "Clique para revelar a Logomarca"}
         >
+            {/* Visão Mobile: Renderiza APENAS a Logo */}
+            <div className="flex lg:hidden w-full h-full items-center justify-center p-6">
+                <img src="/assets/logo.png" alt="iSACI Logo" className="max-w-[280px] sm:max-w-[340px] max-h-full object-contain filter drop-shadow-2xl" />
+            </div>
+
+            {/* Visão Desktop: Renderiza a Animação Canvas */}
             <canvas
                 ref={canvasRef}
-                className="w-full h-full block touch-none pointer-events-auto"
+                className="hidden lg:block w-full h-full touch-none pointer-events-auto"
             />
         </div>
     );
