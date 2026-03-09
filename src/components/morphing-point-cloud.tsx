@@ -127,24 +127,15 @@ export function MorphingPointCloud() {
                 const dHeight = img.height * ratio;
                 const currDy = dy + (shapeDrawHeight - dHeight) / 2;
 
-                // Use a white background for sampling to ensure clean edge detection for transparent assets
-                offCtx.fillStyle = "white";
-                offCtx.fillRect(0, 0, w, h);
+                offCtx.clearRect(0, 0, w, h);
 
                 if (idx === 0) {
-                    // --- CAPYBARA FAMILY COMPOSITION ---
-                    // 1. Mother Capybara (Large, looking right)
-                    offCtx.drawImage(img, dx + drawWidth * 0.35, currDy + dHeight * 0.1, drawWidth * 0.6, dHeight * 0.8);
+                    // --- NATURAL CAPYBARA DUO DISTRIBUTION ---
+                    // 1. Mother Capybara (Large, looking right, center-right)
+                    offCtx.drawImage(img, dx + drawWidth * 0.4, currDy + dHeight * 0.1, drawWidth * 0.6, dHeight * 0.8);
 
-                    // 2. First Calf (Medium, walking behind mother)
-                    offCtx.drawImage(img, dx + drawWidth * 0.1, currDy + dHeight * 0.45, drawWidth * 0.35, dHeight * 0.45);
-
-                    // 3. Second Calf (Small, flipped, looking back)
-                    offCtx.save();
-                    offCtx.translate(dx + drawWidth * 0.75, currDy + dHeight * 0.55);
-                    offCtx.scale(-1, 1);
-                    offCtx.drawImage(img, 0, 0, drawWidth * 0.25, dHeight * 0.35);
-                    offCtx.restore();
+                    // 2. Calf (Medium, shifted left, slightly lower)
+                    offCtx.drawImage(img, dx + drawWidth * 0.05, currDy + dHeight * 0.45, drawWidth * 0.4, dHeight * 0.5);
                 } else if (idx === 2) {
                     // LOGO: scale to (0.98x) and flush right
                     const sw = img.width;
@@ -179,9 +170,10 @@ export function MorphingPointCloud() {
                         // Precise background removal tailored per image
                         let isBg = false;
                         if (idx === 0) {
-                            // Capybaras: much stricter filter to eliminate "white blocks" from SVG bounding boxes
-                            // (r+g+b) > 720 is almost pure white (255*3 = 765)
-                            isBg = (r + g + b) > 720;
+                            // Capybaras: Strictest filter EVER. 
+                            // Only allow pixels that are dark (the capybara's fur/lines).
+                            // Anything near-white or light grey (r+g+b > 450) is GONE.
+                            isBg = (r + g + b) > 450;
                         } else if (idx === 1) {
                             // PCT Guama: filter out the blue sky mathematically (blue is max channel)
                             // Also filter out pure whites if any exist.
@@ -192,7 +184,7 @@ export function MorphingPointCloud() {
                             isBg = r > 240 && g > 240 && b > 240;
                         }
 
-                        if (a > 40 && !isBg) {
+                        if (a > 80 && !isBg) {
                             shapePoints[idx].push({ x, y, r, g, b, a });
                         }
                     }

@@ -1,8 +1,11 @@
 import { PageHero } from "@/components/page-hero"
+import { motion } from "framer-motion"
 import { SectionHeader } from "@/components/section-header"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Linkedin, Mail, MapPin, Phone, ExternalLink, Target, Globe, BookOpen, Users, Rocket, Lightbulb, ShieldCheck, Cpu, HeartHandshake, Leaf, Zap, Heart, Shield } from "lucide-react"
+
+import FachadaImage from "@/assets/Instituto/fachada.jpeg"
 
 // Ícone oficial do Lattes (CNPq) - Estilizado 'L' acadêmico
 const LattesIcon = ({ className }: { className?: string }) => (
@@ -159,23 +162,34 @@ export default function SobrePage() {
             {/* Nossa História */}
             <section className="py-20 bg-background overflow-hidden">
                 <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-                    <SectionHeader title="Nossa História" centered={false} className="mb-12" />
-                    <div className="space-y-8 text-muted-foreground text-lg leading-relaxed text-justify">
-                        <p>
-                            O Instituto Sustentabilidade da Amazônia com Ciência e Inovação - iSACI - foi fundado em 20 de abril de 2023 por um grupo de professores de
-                            cinco Instituições Federais de Ensino Superior do Estado do Pará: Universidade Federal do Pará - UFPA, Universidade Federal Rural do Pará -
-                            UFRA, Universidade Federal do Sul e Sudeste do Pará - Unifesspa, Universidade Federal do Oeste do Pará - Ufopa e Instituto Federal do Pará -
-                            IFPA.
-                        </p>
-                        <p>
-                            O iSACI institui modelos de ação para promover, coordenar e assessorar projetos e serviços nos âmbitos educacionais, de desenvolvimento de
-                            tecnologias, da preservação ambiental, bem como projetos que visem melhoria na eficiência da gestão pública e privada, inclusive por meio da
-                            implementação de ações que assegurem a consecução das atividades pertinentes ao desenvolvimento sustentável da sociedade como um todo.
-                        </p>
-                        <p>
-                            O propósito do iSACI é colaborar com o desenvolvimento científico e tecnológico regional para a sustentabilidade da Amazônia, cumprindo a
-                            função de instituição científica e tecnológica - ICT - para promover o desenvolvimento da inovação, extensão tecnológica e da pesquisa.
-                        </p>
+                    <div className="grid lg:grid-cols-2 gap-12 items-center mb-12">
+                        <div>
+                            <SectionHeader title="Nossa História" centered={false} className="mb-8" />
+                            <div className="space-y-6 text-muted-foreground text-lg leading-relaxed text-justify">
+                                <p>
+                                    O Instituto Sustentabilidade da Amazônia com Ciência e Inovação - iSACI - foi fundado em 20 de abril de 2023 por um grupo de professores de
+                                    cinco Instituições Federais de Ensino Superior do Estado do Pará.
+                                </p>
+                                <p>
+                                    O iSACI institui modelos de ação para promover, coordenar e assessorar projetos e serviços nos âmbitos educacionais, de desenvolvimento de
+                                    tecnologias e da preservação ambiental.
+                                </p>
+                            </div>
+                        </div>
+                        <motion.div
+                            initial={{ opacity: 0, x: 20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            className="relative h-[400px] rounded-3xl overflow-hidden border border-border/50 shadow-2xl group"
+                        >
+                            <Image
+                                src={FachadaImage}
+                                alt="Fachada iSACI"
+                                fill
+                                placeholder="blur"
+                                className="object-cover transition-transform duration-1000 group-hover:scale-110"
+                            />
+                            <div className="absolute inset-0 bg-primary/5 group-hover:bg-transparent transition-colors duration-700" />
+                        </motion.div>
                     </div>
                 </div>
             </section>
