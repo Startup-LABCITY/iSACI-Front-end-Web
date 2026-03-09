@@ -26,21 +26,27 @@ export default function ParceriasPage() {
             />
 
             {/* Parceiros Estratégicos */}
-            <section className="py-24 bg-background">
+            <section className="py-32 bg-background relative overflow-hidden">
+                <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-border to-transparent" />
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <SectionHeader title="Nossos Parceiros Estratégicos" subtitle="Juntos, somos mais fortes para enfrentar os desafios complexos da Amazônia." />
+                    <SectionHeader
+                        eyebrow="Ecosistema"
+                        title="Nossos Parceiros Estratégicos"
+                        subtitle="Unindo forças com as principais instituições de tecnologia, governo e academia para transformar o futuro da Amazônia."
+                    />
 
-                    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mt-16">
+                    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mt-20">
                         {parceiros.map((parceiro, i) => (
-                            <Card key={i} className="bg-card/30 border-border/50 hover:bg-card/80 transition-colors flex flex-col items-center justify-center p-8 text-center min-h-48 group">
+                            <Card key={i} className="bg-card/30 border-border/50 hover:bg-card/80 transition-all duration-500 flex flex-col items-center justify-center p-10 text-center min-h-[14rem] group rounded-[2.5rem] hover:-translate-y-2">
                                 <CardContent className="p-0">
-                                    <div className="text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors tracking-wide">
+                                    <div className="text-2xl font-extrabold text-foreground mb-3 group-hover:text-primary transition-colors tracking-tight">
                                         {parceiro.name}
                                     </div>
-                                    <div className="text-xs text-muted-foreground uppercase tracking-wider font-semibold">
+                                    <div className="text-[11px] font-bold text-muted-foreground uppercase tracking-[0.2em]">
                                         {parceiro.type}
                                     </div>
                                 </CardContent>
+                                <div className="absolute top-4 right-4 h-2 w-2 rounded-full bg-primary/20 group-hover:bg-primary transition-colors" />
                             </Card>
                         ))}
                     </div>
@@ -48,49 +54,51 @@ export default function ParceriasPage() {
             </section>
 
             {/* Impacto / Comunidade */}
-            <section className="py-24 bg-card/30 border-y border-border/50">
-                <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <SectionHeader title="Parcerias com a Comunidade" subtitle="Nossas ações vão além dos laboratórios, impactando diretamente quem vive na Amazônia." />
+            <section className="py-32 bg-secondary/20 relative overflow-hidden">
+                <div className="absolute inset-0 bg-primary/[0.02] pointer-events-none" />
+                <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
+                    <SectionHeader
+                        eyebrow="Comunidade"
+                        title="Parcerias com Propósito"
+                        subtitle="Nossas ações integram o conhecimento científico à realidade local, gerando impacto tangível e progressivo."
+                    />
 
-                    <div className="grid md:grid-cols-3 gap-8 mt-16">
-                        <div className="bg-background rounded-3xl p-8 border border-border">
-                            <HeartHandshake className="h-12 w-12 text-primary mb-6" />
-                            <h3 className="text-xl font-semibold mb-3">Impacto Social</h3>
-                            <p className="text-muted-foreground">Projetos estruturados para gerar melhoria de vida, inclusão e oportunidades justas para comunidades locais.</p>
-                        </div>
-
-                        <div className="bg-background rounded-3xl p-8 border border-border">
-                            <BookOpen className="h-12 w-12 text-primary mb-6" />
-                            <h3 className="text-xl font-semibold mb-3">Conhecimento Tradicional</h3>
-                            <p className="text-muted-foreground">A união do saber dos povos originários e comunidades tradicionais com a ciência moderna.</p>
-                        </div>
-
-                        <div className="bg-background rounded-3xl p-8 border border-border">
-                            <GraduationCap className="h-12 w-12 text-primary mb-6" />
-                            <h3 className="text-xl font-semibold mb-3">Capacitação</h3>
-                            <p className="text-muted-foreground">Programas de formação técnica e profissional para fortalecer a mão de obra e o empreendedorismo regional.</p>
-                        </div>
+                    <div className="grid md:grid-cols-3 gap-10 mt-20">
+                        {[
+                            { icon: HeartHandshake, title: "Impacto Social", desc: "Projetos estruturados para gerar melhoria de vida e oportunidades justas para comunidades locais." },
+                            { icon: BookOpen, title: "Saberes Tradicionais", desc: "A valorização e integração do conhecimento ancestral com as mais recentes inovações científicas." },
+                            { icon: GraduationCap, title: "Educação & Futuro", desc: "Programas de formação técnica para fortalecer a economia regional e o empreendedorismo local." }
+                        ].map((item, i) => (
+                            <div key={i} className="group bg-background rounded-[3rem] p-10 border border-border/50 shadow-sm hover:shadow-2xl hover:border-primary/20 transition-all duration-500 hover:-translate-y-2">
+                                <div className="h-16 w-16 mb-8 rounded-2xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
+                                    <item.icon className="h-8 w-8" />
+                                </div>
+                                <h3 className="text-2xl font-bold mb-4 text-foreground">{item.title}</h3>
+                                <p className="text-muted-foreground leading-relaxed text-lg">{item.desc}</p>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </section>
 
-            {/* CTA Seja Parceiro */}
-            <section className="py-24 relative overflow-hidden bg-primary text-primary-foreground">
-                <div className="absolute inset-0 bg-[url('/noise.png')] opacity-10 mix-blend-overlay" />
-                <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-[600px] h-[600px] rounded-full bg-accent blur-3xl opacity-30 pointer-events-none" />
+            {/* CTA Final */}
+            <section className="py-40 bg-slate-950 dark:bg-card/30 relative overflow-hidden">
+                <div className="absolute inset-0 bg-primary/10 mix-blend-overlay opacity-30" />
+                <div className="absolute -bottom-1/2 -left-1/4 w-full h-full rounded-full bg-primary/20 blur-[180px] pointer-events-none" />
 
                 <div className="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
-                    <h2 className="text-3xl font-bold sm:text-4xl mb-6">Seja um Parceiro do ISACI</h2>
-                    <p className="text-lg text-primary-foreground/90 mb-10 leading-relaxed max-w-2xl mx-auto">
-                        Ao se tornar um parceiro, você investe no futuro sustentável da Amazônia através de projetos focados em bioeconomia, tecnologia e desenvolvimento socioeconômico. Descubra como podemos colaborar.
-                    </p>
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <Button size="lg" className="bg-background text-foreground hover:bg-background/90 text-base h-14 px-8 rounded-full" render={<Link href="/contato" />}>
-                            Formulário de Interesse
-                            <ArrowRight className="ml-2 h-5 w-5" />
-                        </Button>
-                        <Button variant="outline" size="lg" className="border-primary-foreground/30 hover:bg-primary-foreground/10 text-primary-foreground text-base h-14 px-8 rounded-full" render={<Link href="/sobre" />}>
-                            Por que ser nosso parceiro?
+                    <SectionHeader
+                        centered={true}
+                        eyebrow="Vamos construir juntos"
+                        title="Sua visão, nossa excelência"
+                        subtitle="Entre em contato hoje e descubra como o iSACI pode impulsionar seu projeto para o próximo nível."
+                        className="mb-12 dark:text-foreground text-white"
+                    />
+
+                    <div className="flex flex-col sm:flex-row gap-6 justify-center">
+                        <Button size="lg" className="h-16 px-12 text-lg bg-primary text-primary-foreground hover:bg-primary/90 font-extrabold rounded-full shadow-2xl shadow-primary/40 transition-all hover:scale-105" render={<Link href="/contato" />}>
+                            Quero ser um parceiro
+                            <ArrowRight className="ml-2 h-6 w-6" />
                         </Button>
                     </div>
                 </div>

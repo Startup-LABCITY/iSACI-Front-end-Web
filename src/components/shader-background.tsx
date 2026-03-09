@@ -116,10 +116,6 @@ export function ShaderBackground() {
                         }
                     }
                 }
-                console.log(`[LOGO DETECT] Image height: ${sampleHeight}`)
-                console.log(`[LOGO DETECT] Logo section: ${logoBounds.minY} to ${logoBounds.maxY} (Ratio: ${(logoBounds.maxY / sampleHeight).toFixed(3)})`)
-                console.log(`[LOGO DETECT] Subtitle section: ${subtitleBounds.minY} to ${subtitleBounds.maxY} (Ratio: ${(subtitleBounds.minY / sampleHeight).toFixed(3)})`)
-
                 // Calculate the true vertical center of the strictly cropped logo section
                 const cropCenterY = (logoBounds.minY + logoBounds.maxY) / 2 / sampleHeight;
 
@@ -147,8 +143,8 @@ export function ShaderBackground() {
         }
 
         const initNetwork = () => {
-            // Density: EXTREMELY High density to ensure the full "iSACI" text is fully solid and legible
-            const N = 2200
+            // Density: Even higher density as requested by user, optimized for performance
+            const N = 3000
             nodes = []
             edges = []
             pulses = []
@@ -159,30 +155,27 @@ export function ShaderBackground() {
 
                 const isLogoNode = logoPoints.length > 0
 
-                for (let attempts = 0; attempts < 100; attempts++) {
+                for (let attempts = 0; attempts < 50; attempts++) {
                     if (isLogoNode) {
                         const lp = logoPoints[Math.floor(Math.random() * logoPoints.length)]
-
-                        // Scale based on WIDTH because the full logo is very wide.
                         const targetWidth = width * 0.75
                         const renderScale = targetWidth / logoWidth
 
-                        // Position it so it spans beautifully across the screen
                         y = (height / 2) + lp.y * renderScale
                         x = (width * 0.05) + lp.x * targetWidth
 
-                        // Even smaller organic jitter for sharper text
-                        x += (Math.random() - 0.5) * 4
-                        y += (Math.random() - 0.5) * 4
+                        x += (Math.random() - 0.5) * 6
+                        y += (Math.random() - 0.5) * 6
                     } else {
                         x = Math.random() * width
                         y = Math.random() * height
                     }
 
                     valid = true
-                    for (const n of nodes) {
-                        // Very tight spacing for extreme density
-                        if (Math.hypot(n.x - x, n.y - y) < 4) { valid = false; break; }
+                    // Optimization: Only check collision with last 200 nodes instead of all
+                    const checkStart = Math.max(0, nodes.length - 200)
+                    for (let j = checkStart; j < nodes.length; j++) {
+                        if (Math.hypot(nodes[j].x - x, nodes[j].y - y) < 3.5) { valid = false; break; }
                     }
                     if (valid) break
                 }
@@ -190,35 +183,53 @@ export function ShaderBackground() {
                 nodes.push({
                     x, y,
                     baseX: x, baseY: y,
-                    vx: (Math.random() - 0.5) * 0.1,
-                    vy: (Math.random() - 0.5) * 0.1,
+                    vx: (Math.random() - 0.5) * 0.2, // Increased initial velocity
+                    vy: (Math.random() - 0.5) * 0.2,
                     edges: []
                 })
             }
 
-            // 2. Connect nodes organically
+            // 2. Connect nodes organically (Optimized search)
+            // Use a grid or a simpler subset to avoid O(N^2)
+            const gridSize = 100
+            const grid: { [key: string]: Node[] } = {}
+
+            nodes.forEach(n => {
+                const gx = Math.floor(n.x / gridSize)
+                const gy = Math.floor(n.y / gridSize)
+                const key = `${gx},${gy}`
+                if (!grid[key]) grid[key] = []
+                grid[key].push(n)
+            })
+
             nodes.forEach(node => {
-                const sorted = [...nodes]
+                const gx = Math.floor(node.x / gridSize)
+                const gy = Math.floor(node.y / gridSize)
+
+                let neighbors: Node[] = []
+                for (let ox = -1; ox <= 1; ox++) {
+                    for (let oy = -1; oy <= 1; oy++) {
+                        const key = `${gx + ox},${gy + oy}`
+                        if (grid[key]) neighbors = neighbors.concat(grid[key])
+                    }
+                }
+
+                const sorted = neighbors
                     .filter(n => n !== node)
                     .sort((a, b) => Math.hypot(a.x - node.x, a.y - node.y) - Math.hypot(b.x - node.x, b.y - node.y))
 
-                // Connect to 1-3 nearest neighbors
                 const connections = 1 + Math.floor(Math.random() * 2)
-                for (let j = 0; j < connections; j++) {
+                for (let j = 0; j < Math.min(connections, sorted.length); j++) {
                     const neighbor = sorted[j]
-                    if (neighbor) {
-                        const exists = edges.find(e => (e.n1 === node && e.n2 === neighbor) || (e.n1 === neighbor && e.n2 === node))
-                        const dist = Math.hypot(node.x - neighbor.x, node.y - neighbor.y)
+                    const exists = edges.find(e => (e.n1 === node && e.n2 === neighbor) || (e.n1 === neighbor && e.n2 === node))
+                    const dist = Math.hypot(node.x - neighbor.x, node.y - neighbor.y)
 
-                        // CRITICAL FIX: Limit connection distance tightly (120 instead of 300) 
-                        // so lines don't cross empty space and "fill in" the holes of the logo shape.
-                        if (!exists && dist < 120) {
-                            const curveOffset = (Math.random() - 0.5) * 0.2
-                            const edge = { n1: node, n2: neighbor, curveOffset }
-                            edges.push(edge)
-                            node.edges.push(edge)
-                            neighbor.edges.push(edge)
-                        }
+                    if (!exists && dist < 80) { // Tighter connections for higher density
+                        const curveOffset = (Math.random() - 0.5) * 0.15
+                        const edge = { n1: node, n2: neighbor, curveOffset }
+                        edges.push(edge)
+                        node.edges.push(edge)
+                        neighbor.edges.push(edge)
                     }
                 }
             })
@@ -280,32 +291,35 @@ export function ShaderBackground() {
             })
         }
 
-        // Spawn a pulse extremely rarely to keep it clean
+        // Spawn pulses more frequently as requested
         const pulseInterval = setInterval(() => {
-            if (edges.length > 0 && pulses.length < 3) { // Max 3 pulses at a time globally
+            if (edges.length > 0 && pulses.length < 12) { // Increased to 12 pulses
                 const edge = edges[Math.floor(Math.random() * edges.length)]
                 spawnPulse(edge, Math.random() > 0.5)
             }
-        }, 1500) // Much longer interval
+        }, 300) // Much faster interval (300ms)
 
         const animate = () => {
             ctx.clearRect(0, 0, width, height)
 
             // Update Nodes
             nodes.forEach(n => {
-                // Organic drift
+                // Organic drift - keep them "alive"
+                n.vx += (Math.random() - 0.5) * 0.008
+                n.vy += (Math.random() - 0.5) * 0.008
+
                 n.x += n.vx
                 n.y += n.vy
 
-                // Spring back to base position
+                // Spring back to base position - slightly looser for more movement
                 const dx = n.baseX - n.x
                 const dy = n.baseY - n.y
-                n.vx += dx * 0.0005
-                n.vy += dy * 0.0005
+                n.vx += dx * 0.0004
+                n.vy += dy * 0.0004
 
-                // Friction
-                n.vx *= 0.95
-                n.vy *= 0.95
+                // Friction - keeps movement under control
+                n.vx *= 0.96
+                n.vy *= 0.96
             })
 
             // Draw Edges (Organic Synapses)
