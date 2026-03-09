@@ -6,12 +6,11 @@ import { motion } from "framer-motion"
 import { ArrowRight, Leaf, Lightbulb, Users } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
-import { GlobeDemo } from "@/components/globe-demo"
-import { ShaderBackground } from "@/components/shader-background"
+import { MorphingPointCloud } from "@/components/morphing-point-cloud"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { StatsCounter } from "@/components/stats-counter"
 import { SectionHeader } from "@/components/section-header"
-import { HeroLogo } from "@/components/hero-logo"
+// Removed HeroLogo as the particle cloud forms it
 
 export default function Home() {
   const stats = [
@@ -25,60 +24,52 @@ export default function Home() {
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-background lg:min-h-[90vh] flex items-center pt-20">
-        {/* Subtle, clean interactive background */}
-        <div className="absolute inset-0 z-0 opacity-60 pointer-events-auto">
-          <ShaderBackground />
+        {/* Dynamic morphing background */}
+        <div className="absolute inset-0 z-[1] opacity-100 pointer-events-none">
+          <MorphingPointCloud />
         </div>
 
-        {/* Absolute Globe for Desktop: Hero Cropped */}
-        <div className="absolute inset-y-0 right-[-10%] w-[1000px] lg:w-[1200px] hidden lg:flex items-center justify-end pointer-events-none z-0 overflow-visible translate-x-[15%]">
-          <GlobeDemo />
-        </div>
+        {/* Removed redundant globe component as MorphingPointCloud handles the hero visual */}
+
 
         <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center justify-between z-10 py-16 lg:py-0">
 
-          {/* Left Column: Text and Logo */}
-          <div className="flex flex-col items-center lg:items-start text-center lg:text-left w-full lg:w-7/12 z-10">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <HeroLogo />
-            </motion.div>
+          {/* Left Column: Text */}
+          <div className="flex flex-col items-center lg:items-start text-center lg:text-left w-full lg:w-7/12 z-10 pt-[50vh] sm:pt-[45vh] lg:pt-0 pointer-events-none">
+            <div className="pointer-events-auto w-full">
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-foreground leading-[1.1]"
+              >
+                O motor da inovação na <span className="text-primary bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/60">Amazônia</span>
+              </motion.h1>
 
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-              className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-foreground leading-[1.1]"
-            >
-              O motor da inovação na <span className="text-primary bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/60">Amazônia</span>
-            </motion.h1>
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                className="mt-8 text-lg sm:text-2xl text-muted-foreground leading-relaxed font-medium max-w-2xl"
+              >
+                Transformamos conhecimento científico de ponta em progresso socioeconômico, fortalecendo a bioeconomia e a sustentabilidade regional.
+              </motion.p>
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-              className="mt-8 text-lg sm:text-2xl text-muted-foreground leading-relaxed font-medium max-w-2xl"
-            >
-              Transformamos conhecimento científico de ponta em progresso socioeconômico, fortalecendo a bioeconomia e a sustentabilidade regional.
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              className="mt-12 flex flex-col sm:flex-row justify-center lg:justify-start gap-6 w-full"
-            >
-              <Button size="lg" className="h-14 px-10 text-lg bg-primary hover:bg-primary/90 text-primary-foreground font-bold rounded-full shadow-2xl shadow-primary/30 transition-all hover:scale-105" render={<Link href="/projetos">
-                Conheça Nossos Projetos
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>} />
-              <Button variant="outline" size="lg" className="h-14 px-10 text-lg font-bold rounded-full border-primary/20 hover:bg-primary/5 transition-all" render={<Link href="/sobre">
-                Sobre o Instituto
-              </Link>} />
-            </motion.div>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                className="mt-12 flex flex-col sm:flex-row justify-center lg:justify-start gap-6 w-full"
+              >
+                <Button size="lg" className="h-14 px-10 text-lg bg-primary hover:bg-primary/90 text-primary-foreground font-bold rounded-full shadow-2xl shadow-primary/30 transition-all hover:scale-105" render={<Link href="/projetos">
+                  Conheça Nossos Projetos
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>} />
+                <Button variant="outline" size="lg" className="h-14 px-10 text-lg font-bold rounded-full border-primary/20 hover:bg-primary/5 transition-all" render={<Link href="/sobre">
+                  Sobre o Instituto
+                </Link>} />
+              </motion.div>
+            </div>
           </div>
         </div>
       </section>

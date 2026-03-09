@@ -78,20 +78,16 @@ export function Header() {
                         <NavigationMenuList className="gap-2">
                             {navLinks.map((link) => (
                                 <NavigationMenuItem key={link.href}>
-                                    <Link href={link.href} passHref>
-                                        <NavigationMenuLink
-                                            active={pathname === link.href}
-                                            className={cn(
-                                                navigationMenuTriggerStyle(),
-                                                "bg-transparent font-medium text-[15px] tracking-tight transition-all duration-200 rounded-full px-5 h-10",
-                                                pathname === link.href
-                                                    ? "text-primary bg-primary/5 font-bold"
-                                                    : "text-muted-foreground hover:text-primary hover:bg-primary/5"
-                                            )}
-                                        >
-                                            {link.label}
-                                        </NavigationMenuLink>
-                                    </Link>
+                                    <NavigationMenuLink
+                                        active={pathname === link.href}
+                                        render={<Link href={link.href} />}
+                                        className={cn(
+                                            navigationMenuTriggerStyle(),
+                                            "bg-transparent font-medium text-[15px] tracking-tight transition-all duration-200 rounded-full px-5 h-10 data-active:text-primary data-active:bg-primary/5 data-active:font-bold text-muted-foreground hover:text-primary hover:bg-primary/5"
+                                        )}
+                                    >
+                                        {link.label}
+                                    </NavigationMenuLink>
                                 </NavigationMenuItem>
                             ))}
                         </NavigationMenuList>

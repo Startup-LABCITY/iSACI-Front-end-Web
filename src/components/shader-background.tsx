@@ -17,14 +17,14 @@ export function ShaderBackground() {
         let animationFrameId: number
 
         const isDark = resolvedTheme === "dark"
-        // Increased opacity slightly to make the logo shape unmistakable while remaining a background element
-        const strokeBase = isDark ? "rgba(16, 185, 129, 0.12)" : "rgba(6, 78, 59, 0.18)"
-        const nodeBase = isDark ? "rgba(16, 185, 129, 0.20)" : "rgba(6, 78, 59, 0.28)"
+        // Increased opacity significantly for light mode as requested
+        const strokeBase = isDark ? "rgba(16, 185, 129, 0.12)" : "rgba(6, 78, 59, 0.25)"
+        const nodeBase = isDark ? "rgba(16, 185, 129, 0.20)" : "rgba(6, 78, 59, 0.35)"
 
         // Amazon Nature + Tech Connection colors (richer in light mode)
         const pulseColors = isDark
             ? ["#10b981", "#059669", "#0ea5e9", "#0284c7"] // neon for dark bg
-            : ["#065f46", "#047857", "#0369a1", "#1d4ed8"] // deep jewel tones for light bg
+            : ["#059669", "#047857", "#0369a1", "#0284c7"] // more saturated green and blue for light bg
 
         let width = 0
         let height = 0
