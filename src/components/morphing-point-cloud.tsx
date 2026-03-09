@@ -25,15 +25,25 @@ export function MorphingPointCloud() {
     // 0: Capybara, 1: PCT Guama, 2: Tree
     const [initialShape, setInitialShape] = useState<number | null>(null);
     const [assembled, setAssembled] = useState(false);
+    const [windowSize, setWindowSize] = useState([0, 0]);
     const mouseRef = useRef({ x: -1000, y: -1000 });
 
     useEffect(() => {
-        // Randomly pick initial shape on mount: 0, 1, or 2
-        setInitialShape(Math.floor(Math.random() * 3));
+        // Sequentially pick initial shape on mount: 0=Capybara, 1=PCT, 2=Tree
+        if (typeof window !== "undefined") {
+            const lastShape = parseInt(localStorage.getItem("isaci_last_shape") || "-1");
+            const nextShape = (lastShape + 1) % 3;
+            localStorage.setItem("isaci_last_shape", nextShape.toString());
+            setInitialShape(nextShape);
+        } else {
+            setInitialShape(0);
+        }
+    }, []);
 
-        // Timer for shape transition
-        const timer = setTimeout(() => setAssembled(true), 5000); // 5 seconds wait before logo
-        return () => clearTimeout(timer);
+    useEffect(() => {
+        const handleResize = () => setWindowSize([window.innerWidth, window.innerHeight]);
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
     }, []);
 
     useEffect(() => {
@@ -41,9 +51,12 @@ export function MorphingPointCloud() {
             const canvas = canvasRef.current;
             if (!canvas) return;
             const rect = canvas.getBoundingClientRect();
+            // Mathematical patch map mouse space mathematically regardless of CSS bounds
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
             mouseRef.current = {
-                x: e.clientX - rect.left,
-                y: e.clientY - rect.top
+                x: (e.clientX - rect.left) * scaleX,
+                y: (e.clientY - rect.top) * scaleY
             };
         };
         window.addEventListener("mousemove", handleMouseMove);
@@ -61,19 +74,23 @@ export function MorphingPointCloud() {
         let frameId: number | null = null;
         let isDarkMode = resolvedTheme === "dark";
 
-        const w = window.innerWidth;
-        const h = window.innerHeight;
+        const parent = canvas.parentElement;
+        const w = parent ? parent.clientWidth : window.innerWidth;
+        const h = parent ? parent.clientHeight : window.innerHeight;
         canvas.width = w;
         canvas.height = h;
 
-        // Base sizing and positioning logic
-        const isDesktop = w >= 1024;
-        const drawWidth = isDesktop ? Math.min(600, w * 0.35) : Math.min(350, w * 0.8);
-        const dx = isDesktop ? w * 0.75 - drawWidth / 2 : w * 0.5 - drawWidth / 2;
+        // Base sizing and positioning logic within the new explicit Right Column container
+        const isDesktop = window.innerWidth >= 1024;
+        // MAX-IMPACT: Use full available width now that we've eated the margin
+        const drawWidth = isDesktop ? Math.min(1150, w * 0.98) : Math.min(390, w * 0.98);
 
-        // For mobile, we place it higher so it doesn't overlap text too much
-        const dy = isDesktop ? h * 0.5 - (drawWidth * 0.35) : h * 0.25 - (drawWidth * 0.35);
-        const shapeDrawHeight = drawWidth * 0.7;
+        // Balance height
+        const shapeDrawHeight = isDesktop ? Math.min(drawWidth * 0.75, h * 0.85) : drawWidth * 0.8;
+        // FLUSH RIGHT
+        const dx = isDesktop ? (w - drawWidth) : (w - drawWidth) / 2;
+        // Keep it relatively high
+        const dy = isDesktop ? 30 : 40;
 
         // Images: 0: Capybara, 1: PCT, 2: Logo
         const imagesSrc = [
@@ -112,82 +129,162 @@ export function MorphingPointCloud() {
                 const currDy = dy + (shapeDrawHeight - dHeight) / 2;
 
                 offCtx.clearRect(0, 0, w, h);
-                offCtx.drawImage(img, dx, currDy, drawWidth, dHeight);
+
+                if (idx === 0) {
+                    // --- CAPYBARA FAMILY COMPOSITION ---
+                    // 1. Mother Capybara (Large, looking right)
+                    offCtx.drawImage(img, dx + drawWidth * 0.35, currDy + dHeight * 0.1, drawWidth * 0.6, dHeight * 0.8);
+
+                    // 2. First Calf (Medium, walking behind mother)
+                    offCtx.drawImage(img, dx + drawWidth * 0.1, currDy + dHeight * 0.45, drawWidth * 0.35, dHeight * 0.45);
+
+                    // 3. Second Calf (Small, flipped, looking back)
+                    offCtx.save();
+                    offCtx.translate(dx + drawWidth * 0.75, currDy + dHeight * 0.55);
+                    offCtx.scale(-1, 1);
+                    offCtx.drawImage(img, 0, 0, drawWidth * 0.25, dHeight * 0.35);
+                    offCtx.restore();
+                } else if (idx === 2) {
+                    // LOGO: scale to (0.98x) and flush right
+                    const sw = img.width;
+                    const sh = img.height;
+                    const sx = 0;
+                    const sy = 0;
+
+                    const dw = drawWidth * 0.98;
+                    const dh = dw * (sh / sw);
+                    const destX = isDesktop ? w - dw : (w - dw) / 2;
+                    const destY = dy + (shapeDrawHeight - dh) / 2;
+
+                    offCtx.drawImage(img, sx, sy, sw, sh, destX, destY, dw, dh);
+                } else {
+                    // Building (idx 1): User likes this one, keep logic but flush right
+                    const pad = drawWidth * 0.05;
+                    offCtx.drawImage(img, dx + pad / 2 + 20, currDy + pad / 2, drawWidth - pad, dHeight - pad);
+                }
+
                 const { data } = offCtx.getImageData(0, 0, w, h);
 
-                const sampleGap = isDesktop ? 4 : 3;
+                // High-resolution sampling for complex organic shapes
+                const sampleGap = isDesktop ? 2 : 3;
                 for (let y = 0; y < h; y += sampleGap) {
                     for (let x = 0; x < w; x += sampleGap) {
                         const index = (y * w + x) * 4;
+                        const r = data[index];
+                        const g = data[index + 1];
+                        const b = data[index + 2];
                         const a = data[index + 3];
-                        if (a > 40) {
-                            shapePoints[idx].push({ x, y, r: data[index], g: data[index + 1], b: data[index + 2], a });
+
+                        // Precise background removal tailored per image
+                        let isBg = false;
+                        if (idx === 0) {
+                            // Capybaras: very lenient filter to preserve details
+                            isBg = r > 250 && g > 250 && b > 250;
+                        } else if (idx === 1) {
+                            // PCT Guama: filter out the blue sky mathematically (blue is max channel)
+                            // Also filter out pure whites if any exist.
+                            const isBlueSky = (b > r && b > g);
+                            const isPureWhite = (r > 240 && g > 240 && b > 240);
+                            isBg = isBlueSky || isPureWhite;
+                        } else {
+                            isBg = r > 240 && g > 240 && b > 240;
+                        }
+
+                        if (a > 40 && !isBg) {
+                            shapePoints[idx].push({ x, y, r, g, b, a });
                         }
                     }
                 }
             });
 
-            // Procedural Tree Generator (Used if initialShape === 2)
+            // --- IMPROVED PROCEDURAL SUMAÚMA GENERATION ---
+            const numTreePts = 60000; // Increased density for premium look
             const treePoints: { x: number, y: number, c: string, a: number, isTrunk: boolean }[] = [];
-            const numTreePts = 40000;
-            const treeBaseY = dy + shapeDrawHeight;
-            const treeHeight = shapeDrawHeight * 1.5;
-            const treeTop = treeBaseY - treeHeight;
-            const centerX = dx + drawWidth / 2;
-            const trunkTopW = drawWidth * 0.08;
-            const trunkBaseW = drawWidth * 0.35;
 
-            // Generate Tree Trunk
-            for (let i = 0; i < numTreePts * 0.45; i++) {
+            const treeBottom = dy + shapeDrawHeight - 10;
+            const trunkHeight = shapeDrawHeight * 0.58;
+            const treeTop = treeBottom - trunkHeight;
+            const centerX = dx + drawWidth * 0.5; // PERFECT CENTER to prevent clipping
+
+            const canopyWidth = drawWidth * 0.75; // Slightly narrowed to stay within bounds
+            const trunkBaseWidth = drawWidth * 0.6;
+            const trunkTopWidth = drawWidth * 0.12;
+
+            // 1. Massive Gaussian Trunk & Sapopemas
+            for (let i = 0; i < numTreePts * 0.5; i++) {
                 const py = Math.random();
-                const flare = Math.pow(py, 5.0) * 3.5;
-                const hw = (trunkTopW + (trunkBaseW - trunkTopW) * flare) / 2;
-                const gx = (Math.random() + Math.random() + Math.random() + Math.random() - 2) * 0.5;
-                const px = centerX + gx * hw * 2.2;
-                const pY = treeTop + py * treeHeight;
-                treePoints.push({ x: px, y: pY, c: "rgba(30, 50, 20, 1)", a: 0.9, isTrunk: true });
+                const flare = Math.pow(py, 6.0) * 4.5;
+                const currentHalfWidth = (trunkTopWidth + (trunkBaseWidth - trunkTopWidth) * flare) / 2;
+                const gaussian = (Math.random() + Math.random() + Math.random() + Math.random()) / 4 - 0.5;
+                const px = centerX + gaussian * currentHalfWidth * 2.2;
+                const posY = treeTop + py * trunkHeight;
+
+                let color = "rgba(18, 31, 10, 1)";
+                if (Math.abs(px - centerX) > currentHalfWidth * 0.3) {
+                    color = "rgba(45, 75, 30, 1)";
+                }
+                treePoints.push({ x: px, y: posY, c: color, a: 0.9, isTrunk: true });
             }
 
-            // Generate Branches and Foliage Clusters
-            const branches = [-0.15, -0.35, -0.5, -0.65, -0.85, -1.05, -1.25];
-            branches.forEach(angle => {
-                const len = treeHeight * (0.6 + Math.random() * 0.4);
-                const cx = centerX + Math.cos(angle) * len;
-                const cy = treeTop + Math.sin(angle) * len;
+            // 2. Majestic Branches and Foliage
+            const branchAngles = [-Math.PI * 0.15, -Math.PI * 0.3, -Math.PI * 0.45, -Math.PI * 0.55, -Math.PI * 0.7, -Math.PI * 0.85, -Math.PI * 0.95];
+            const clusterCenters: { x: number, y: number, r: number }[] = [];
 
-                const ptsPerBranch = Math.floor(numTreePts * 0.55 / branches.length);
-                for (let i = 0; i < ptsPerBranch; i++) {
-                    const rDist = Math.pow(Math.random(), 0.8) * drawWidth * 0.35;
-                    const rAng = Math.random() * Math.PI * 2;
-                    const px = cx + Math.cos(rAng) * rDist;
-                    const pY = cy + Math.sin(rAng) * rDist;
-                    const distN = Math.hypot(px - cx, pY - cy) / (drawWidth * 0.35);
-                    const isTip = distN > 0.65;
+            branchAngles.forEach((angle) => {
+                // Shorten branches so they don't clip the top dy boundary
+                const maxLen = treeTop - dy;
+                const len = Math.min(maxLen * 0.9, trunkHeight * (0.5 + Math.random() * 0.4));
+                const branchEndX = centerX + Math.cos(angle) * len;
+                const branchEndY = treeTop + Math.sin(angle) * len;
+
+                for (let j = 0; j < 1000; j++) {
+                    const t = j / 1000;
+                    const b_width = (trunkTopWidth * (1 - t)) + 8;
                     treePoints.push({
-                        x: px, y: pY,
-                        c: isTip ? "rgba(162, 209, 73, 1)" : "rgba(45, 75, 30, 1)",
-                        a: Math.max(0.4, 1 - distN * 0.6),
-                        isTrunk: false
+                        x: centerX + Math.cos(angle) * len * t + (Math.random() - 0.5) * b_width,
+                        y: treeTop + Math.sin(angle) * len * t + (Math.random() - 0.5) * b_width,
+                        c: "rgba(45, 75, 30, 1)", a: 0.9, isTrunk: true
                     });
+
+                    if (j % 200 === 0 && j > 0) {
+                        clusterCenters.push({
+                            x: centerX + Math.cos(angle) * len * t,
+                            y: treeTop + Math.sin(angle) * len * t,
+                            r: drawWidth * (0.05 + t * 0.15)
+                        });
+                    }
                 }
+                clusterCenters.push({ x: branchEndX, y: branchEndY, r: drawWidth * 0.2 });
             });
+
+            for (let i = 0; i < numTreePts * 0.5; i++) {
+                const cluster = clusterCenters[i % clusterCenters.length];
+                const distRatio = Math.pow(Math.random(), 0.9);
+                const angle = Math.random() * Math.PI * 2;
+                const px = cluster.x + Math.cos(angle) * cluster.r * distRatio;
+                const py = cluster.y + Math.sin(angle) * cluster.r * distRatio;
+
+                const isTip = distRatio > 0.7;
+                treePoints.push({
+                    x: px, y: py,
+                    c: isTip ? "rgba(162, 209, 73, 1)" : "rgba(45, 75, 30, 1)",
+                    a: Math.max(0.4, 1.0 - distRatio * 0.6),
+                    isTrunk: false
+                });
+            }
 
             // Target Logo is shapePoints[2]
             const logoPts = shapePoints[2];
 
-            // Required particles count
-            const maxPoints = 40000;
+            // TARGETS PAD LOOP
+            const maxPoints = Math.max(logoPts.length, shapePoints[0].length, shapePoints[1].length, treePoints.length, 60000);
 
-            // Pad the shape arrays if they don't have enough points
-            while (logoPts.length > 0 && logoPts.length < maxPoints) {
-                logoPts.push(...logoPts.slice(0, maxPoints - logoPts.length));
-            }
-            while (shapePoints[0].length > 0 && shapePoints[0].length < maxPoints) {
-                shapePoints[0].push(...shapePoints[0].slice(0, maxPoints - shapePoints[0].length));
-            }
-            while (shapePoints[1].length > 0 && shapePoints[1].length < maxPoints) {
-                shapePoints[1].push(...shapePoints[1].slice(0, maxPoints - shapePoints[1].length));
-            }
+            // Pad the shape arrays
+            ([logoPts, shapePoints[0], shapePoints[1], treePoints] as any[][]).forEach(arr => {
+                while (arr.length > 0 && arr.length < maxPoints) {
+                    arr.push(...arr.slice(0, maxPoints - arr.length));
+                }
+            });
 
             const particles: Particle[] = [];
 
@@ -207,14 +304,10 @@ export function MorphingPointCloud() {
                 }
 
                 // Fallback start point if something weird happens
-                if (!sPt) sPt = { x: centerX, y: treeBaseY };
+                if (!sPt) sPt = { x: centerX, y: treeBottom };
 
                 const tPt = logoPts[i] || { x: centerX, y: dy, r: 0, g: 0, b: 0, a: 0 };
                 let tR = tPt.r, tG = tPt.g, tB = tPt.b;
-                // Deal with dark mode specifically for the logo
-                if (isDarkMode && tR < 50 && tG < 50 && tB < 50) {
-                    tR = 255; tG = 255; tB = 255;
-                }
 
                 particles.push({
                     x: sPt.x + (Math.random() - 0.5) * 40, // spread initial appearance slightly
@@ -254,7 +347,7 @@ export function MorphingPointCloud() {
                         targetY = p.ty;
                         drawColor = p.tColor;
                         drawAlpha = p.tAlpha;
-                        ease = 0.035; // Slowed down assembly slightly 
+                        ease = 0.07; // Much faster assembly for snappy feel
 
                         const dx_p = p.x - targetX;
                         const dy_p = p.y - targetY;
@@ -289,7 +382,7 @@ export function MorphingPointCloud() {
                     p.x += (targetX - p.x) * ease;
                     p.y += (targetY - p.y) * ease;
 
-                    // Fade out particles entirely when image is appearing
+                    // Fade out particles entirely when final image is appearing
                     if (currentImageAlpha > 0) {
                         drawAlpha *= (1 - currentImageAlpha);
                     }
@@ -304,22 +397,26 @@ export function MorphingPointCloud() {
                 ctx.globalAlpha = 1;
 
                 // When enough particles have hit the target, fade in the final Logo completely
-                if (assembled && localFinishedCount > particles.length * 0.6) {
-                    currentImageAlpha += 0.01; // slower fade in
+                if (assembled && localFinishedCount > particles.length * 0.4) {
+                    currentImageAlpha += 0.03; // much faster fade in
                     if (currentImageAlpha > 1) currentImageAlpha = 1;
                 }
 
                 // Actually draw the *crisp* image of the logo when assembled
                 if (currentImageAlpha > 0 && images[2]) {
                     const img = images[2];
-                    const ratio = drawWidth / img.width;
-                    const dHeight = img.height * ratio;
-                    const currDy = dy + (shapeDrawHeight - dHeight) / 2;
+                    const sw = img.width;
+                    const sh = img.height;
+                    const sx = 0;
+                    const sy = 0;
+
+                    const dw = drawWidth * 0.98;
+                    const dh = dw * (sh / sw);
+                    const destX = isDesktop ? w - dw : (w - dw) / 2;
+                    const destY = dy + (shapeDrawHeight - dh) / 2;
 
                     ctx.globalAlpha = currentImageAlpha;
-                    if (isDarkMode) ctx.filter = "invert(1)";
-                    ctx.drawImage(img, dx, currDy, drawWidth, dHeight);
-                    ctx.filter = "none";
+                    ctx.drawImage(img, sx, sy, sw, sh, destX, destY, dw, dh);
                     ctx.globalAlpha = 1;
                 }
 
@@ -334,13 +431,24 @@ export function MorphingPointCloud() {
         return () => {
             if (frameId !== null) cancelAnimationFrame(frameId);
         };
-    }, [initialShape, assembled, resolvedTheme]);
+    }, [initialShape, assembled, resolvedTheme, windowSize]);
 
     return (
-        <div className="absolute inset-0 w-full h-full -z-10 bg-transparent overflow-hidden">
+        <div
+            className="w-full h-full relative overflow-hidden cursor-pointer flex items-center justify-center rounded-2xl"
+            onClick={() => {
+                if (assembled) {
+                    setInitialShape((prev) => (prev !== null ? (prev + 1) % 3 : 0));
+                    setAssembled(false);
+                } else {
+                    setAssembled(true);
+                }
+            }}
+            title={assembled ? "Clique para ver a próxima imagem" : "Clique para revelar a Logomarca"}
+        >
             <canvas
                 ref={canvasRef}
-                className="absolute inset-0 w-full h-full object-cover touch-none pointer-events-auto z-0"
+                className="w-full h-full block touch-none pointer-events-auto"
             />
         </div>
     );

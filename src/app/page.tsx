@@ -22,26 +22,19 @@ export default function Home() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden bg-background lg:min-h-[90vh] flex items-center pt-20">
-        {/* Dynamic morphing background */}
-        <div className="absolute inset-0 z-[1] opacity-100 pointer-events-none">
-          <MorphingPointCloud />
-        </div>
-
-        {/* Removed redundant globe component as MorphingPointCloud handles the hero visual */}
+      <section className="relative overflow-hidden bg-background min-h-[90vh] flex items-center pt-24 pb-12 lg:pb-0">
 
 
-        <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center justify-between z-10 py-16 lg:py-0">
+        <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 mt-12 flex flex-col-reverse lg:flex-row items-center justify-between z-10 lg:py-0">
 
           {/* Left Column: Text */}
-          <div className="flex flex-col items-center lg:items-start text-center lg:text-left w-full lg:w-7/12 z-10 pt-[50vh] sm:pt-[45vh] lg:pt-0 pointer-events-none">
-            <div className="pointer-events-auto w-full">
+          <div className="flex flex-col items-center lg:items-start text-center lg:text-left w-full lg:w-[42%] z-20 mt-12 lg:-mt-24 relative">
+            <div className="w-full">
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-                className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-foreground leading-[1.1]"
+                className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.1]"
               >
                 O motor da inovação na <span className="text-primary bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/60">Amazônia</span>
               </motion.h1>
@@ -71,11 +64,16 @@ export default function Home() {
               </motion.div>
             </div>
           </div>
+
+          {/* Right Column: Canvas Component */}
+          <div className="w-full lg:w-[58%] h-[60vh] lg:h-[85vh] relative z-10 flex items-start justify-center lg:justify-end -mt-10 lg:-mt-20 lg:-mr-8">
+            <MorphingPointCloud />
+          </div>
         </div>
       </section>
 
       {/* Stats Section - Polished */}
-      <section className="relative z-20 -mt-8 px-4">
+      <section className="relative z-20 px-4">
         <div className="mx-auto max-w-7xl bg-card/60 backdrop-blur-2xl rounded-[2.5rem] border border-border/50 shadow-2xl p-8 lg:p-12">
           <StatsCounter stats={stats} />
         </div>
@@ -267,7 +265,7 @@ export default function Home() {
             eyebrow="Vamos construir juntos"
             title="Sua visão, nossa excelência científica"
             subtitle="Entre em contato hoje e descubra como o iSACI pode impulsionar seu projeto para o próximo nível."
-            className="mb-12 dark:text-foreground"
+            className="mb-12 [&_h2]:text-white [&_p]:text-white/80"
           />
 
           <Button size="lg" className="h-16 px-14 text-xl bg-primary text-primary-foreground hover:bg-primary/90 font-extrabold rounded-full shadow-2xl shadow-primary/40 transition-all hover:scale-105" render={<Link href="/contato">

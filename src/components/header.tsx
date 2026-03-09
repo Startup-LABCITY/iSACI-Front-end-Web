@@ -47,8 +47,8 @@ export function Header() {
         return () => window.removeEventListener("scroll", handleScroll)
     }, [pathname])
 
-    const logoOpacity = isHome ? (isScrolled ? 1 : 0) : 1
-    const logoY = isHome ? (isScrolled ? 0 : -20) : 0
+    const logoOpacity = 1;
+    const logoY = 0;
 
     return (
         <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/60 backdrop-blur-3xl supports-[backdrop-filter]:bg-background/40 transition-all duration-300">
