@@ -80,7 +80,6 @@ export function MorphingPointCloud() {
         canvas.width = w;
         canvas.height = h;
 
-        // Base sizing and positioning logic within the new explicit Right Column container
         const isDesktop = window.innerWidth >= 1024;
         // MAX-IMPACT: Use full available width now that we've eated the margin
         const drawWidth = isDesktop ? Math.min(1150, w * 0.98) : Math.min(390, w * 0.98);
@@ -128,7 +127,9 @@ export function MorphingPointCloud() {
                 const dHeight = img.height * ratio;
                 const currDy = dy + (shapeDrawHeight - dHeight) / 2;
 
-                offCtx.clearRect(0, 0, w, h);
+                // Use a white background for sampling to ensure clean edge detection for transparent assets
+                offCtx.fillStyle = "white";
+                offCtx.fillRect(0, 0, w, h);
 
                 if (idx === 0) {
                     // --- CAPYBARA FAMILY COMPOSITION ---
@@ -178,8 +179,9 @@ export function MorphingPointCloud() {
                         // Precise background removal tailored per image
                         let isBg = false;
                         if (idx === 0) {
-                            // Capybaras: very lenient filter to preserve details
-                            isBg = r > 250 && g > 250 && b > 250;
+                            // Capybaras: much stricter filter to eliminate "white blocks" from SVG bounding boxes
+                            // (r+g+b) > 720 is almost pure white (255*3 = 765)
+                            isBg = (r + g + b) > 720;
                         } else if (idx === 1) {
                             // PCT Guama: filter out the blue sky mathematically (blue is max channel)
                             // Also filter out pure whites if any exist.
@@ -201,12 +203,12 @@ export function MorphingPointCloud() {
             const numTreePts = 60000; // Increased density for premium look
             const treePoints: { x: number, y: number, c: string, a: number, isTrunk: boolean }[] = [];
 
-            const treeBottom = dy + shapeDrawHeight - 10;
-            const trunkHeight = shapeDrawHeight * 0.58;
+            const treeBottom = dy + shapeDrawHeight - 30; // Lifted slightly for more room
+            const trunkHeight = shapeDrawHeight * 0.55;
             const treeTop = treeBottom - trunkHeight;
             const centerX = dx + drawWidth * 0.5; // PERFECT CENTER to prevent clipping
 
-            const canopyWidth = drawWidth * 0.75; // Slightly narrowed to stay within bounds
+            const canopyWidth = drawWidth * 0.7; // Narrowed to guarantee no edge clipping
             const trunkBaseWidth = drawWidth * 0.6;
             const trunkTopWidth = drawWidth * 0.12;
 
@@ -250,11 +252,11 @@ export function MorphingPointCloud() {
                         clusterCenters.push({
                             x: centerX + Math.cos(angle) * len * t,
                             y: treeTop + Math.sin(angle) * len * t,
-                            r: drawWidth * (0.05 + t * 0.15)
+                            r: drawWidth * (0.08 + t * 0.2) // Fuller clusters
                         });
                     }
                 }
-                clusterCenters.push({ x: branchEndX, y: branchEndY, r: drawWidth * 0.2 });
+                clusterCenters.push({ x: branchEndX, y: branchEndY, r: drawWidth * 0.25 });
             });
 
             for (let i = 0; i < numTreePts * 0.5; i++) {
