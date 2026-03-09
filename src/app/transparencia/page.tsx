@@ -87,7 +87,7 @@ export default function TransparenciaPage() {
                     />
 
                     <div className="mt-20 bg-background border border-border/50 rounded-[3rem] p-4 shadow-2xl overflow-hidden">
-                        <Accordion type="single" collapsible className="w-full">
+                        <Accordion className="w-full">
                             {documentosGovernanca.map((doc, i) => (
                                 <AccordionItem key={i} value={`item-${i}`} className="border-border/30 px-8 [&:last-child]:border-0 overflow-hidden">
                                     <AccordionTrigger className="hover:no-underline hover:text-primary text-left font-bold text-xl py-8 transition-colors">

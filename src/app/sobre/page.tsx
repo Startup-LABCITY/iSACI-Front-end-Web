@@ -1,3 +1,5 @@
+"use client"
+
 import { PageHero } from "@/components/page-hero"
 import { motion } from "framer-motion"
 import { SectionHeader } from "@/components/section-header"
