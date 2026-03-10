@@ -192,7 +192,7 @@ export function TeamCarousel() {
             <div className="absolute inset-0 bg-primary/10 mix-blend-multiply opacity-50 pointer-events-none" />
 
             {/* Content Overlay */}
-            <div className="absolute inset-0 flex flex-col justify-end p-4 sm:p-6 md:p-8 pointer-events-none z-10">
+            <div className="absolute inset-0 flex flex-col justify-end p-3 sm:p-4 md:p-5 pointer-events-none z-10">
                 <AnimatePresence mode="wait">
                     <motion.div
                         key={`content-${currentIndex}`}
@@ -200,48 +200,48 @@ export function TeamCarousel() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
                         transition={{ duration: 0.4, delay: 0.1 }}
-                        className="bg-background/95 dark:bg-card/95 backdrop-blur-xl p-5 sm:p-6 rounded-3xl border border-border/50 shadow-2xl pointer-events-auto"
+                        className="bg-background/80 dark:bg-card/80 backdrop-blur-2xl p-2.5 sm:p-3.5 rounded-2xl border border-border/30 shadow-2xl pointer-events-auto w-full"
                     >
-                        {/* Group Label */}
-                        <div className="mb-2">
-                            <span className="inline-block px-2.5 py-0.5 rounded-full bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-wider">
+                        {/* Ultra-compact Header */}
+                        <div className="flex flex-col gap-0">
+                            <span className="text-primary text-[7px] font-black uppercase tracking-wider mb-0.5">
                                 {member.group}
                             </span>
+                            <div className="flex items-baseline justify-between gap-2">
+                                <h3 className="text-sm sm:text-base font-black text-foreground leading-tight">
+                                    {member.name}
+                                </h3>
+                                <p className="text-primary font-bold text-[9px] sm:text-[10px] uppercase whitespace-nowrap">
+                                    {member.role}
+                                </p>
+                            </div>
                         </div>
 
-                        <h3 className="text-xl sm:text-2xl font-extrabold text-foreground leading-tight mb-0.5">
-                            {member.name}
-                        </h3>
-                        <p className="text-primary font-semibold text-sm sm:text-base mb-3">
-                            {member.role}
-                        </p>
-
-                        <p className="text-muted-foreground text-sm leading-relaxed mb-4 italic border-l-2 border-primary/40 pl-3">
+                        {/* Minimal Description: 1 line (expands on hover) */}
+                        <p className="mt-1.5 text-muted-foreground text-xs sm:text-sm leading-relaxed italic border-l-2 border-primary/20 pl-2 line-clamp-1 group-hover:line-clamp-3 transition-all duration-500">
                             "{member.description}"
                         </p>
 
-                        <div className="flex items-center gap-3 text-xs sm:text-sm font-medium text-foreground/80 flex-wrap">
-                            <a
-                                href={`mailto:${member.email}`}
-                                className="flex items-center gap-1.5 hover:text-primary transition-colors bg-secondary/50 px-3 py-1.5 rounded-full"
-                            >
-                                <Mail className="h-3.5 w-3.5" />
-                                {member.email}
-                            </a>
-                            <div
-                                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-secondary/50 transition-all ${member.lattes
-                                        ? "text-[#88b04b] shadow-[0_0_15px_rgba(136,176,75,0.15)] ring-1 ring-[#88b04b]/20"
-                                        : "text-muted-foreground/30 opacity-50 grayscale"
-                                    }`}
-                                title={member.lattes ? "Visualizar Currículo Lattes" : "Currículo não disponível"}
-                            >
-                                <LattesIcon className="h-3.5 w-3.5" />
-                                {member.lattes ? (
-                                    <a href={member.lattes} target="_blank" rel="noreferrer" className="hover:underline">
+                        {/* Minimal Row Links */}
+                        <div className="mt-2.5 flex items-center justify-between gap-2 border-t border-border/10 pt-2">
+                            <div className="flex items-center gap-2">
+                                <a
+                                    href={`mailto:${member.email}`}
+                                    className="flex items-center gap-1 hover:text-primary transition-colors text-[9px] font-bold"
+                                >
+                                    <Mail className="h-2.5 w-2.5" />
+                                    {member.email}
+                                </a>
+                                {member.lattes && (
+                                    <a 
+                                        href={member.lattes} 
+                                        target="_blank" 
+                                        rel="noreferrer" 
+                                        className="flex items-center gap-1 text-[#88b04b] hover:underline text-[9px] font-bold"
+                                    >
+                                        <LattesIcon className="h-2.5 w-2.5" />
                                         Lattes
                                     </a>
-                                ) : (
-                                    <span>Lattes</span>
                                 )}
                             </div>
                         </div>
