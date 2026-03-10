@@ -109,7 +109,7 @@ export default function SobrePage() {
         {
             name: "Edvar da Luz Oliveira", role: "Instituidor",
             lattes: "http://lattes.cnpq.br/1840754571733900", linkedin: "https://www.linkedin.com/in/edvaroliveira/",
-            image: "/assets/gestores/instituidores/Edvar-da-Luz-Oliveira.png",
+            image: "/assets/gestores/instituidores/Edvar-da-Luz-Oliveira.jpg",
             bio: "Doutor em EE pela UFPA. Presidente CPA UFRA. Assessor PRODEPA, parte do projeto NavegaPará. Professor da UFRA."
         },
         {

@@ -90,7 +90,7 @@ const teamMembers: TeamMember[] = [
         role: "Instituidor",
         email: "isaci@ufpa.br",
         description: "Doutor em EE pela UFPA. Presidente CPA UFRA. Assessor PRODEPA, parte do projeto NavegaPará. Professor da UFRA.",
-        image: "/assets/gestores/instituidores/Edvar-da-Luz-Oliveira.png",
+        image: "/assets/gestores/instituidores/Edvar-da-Luz-Oliveira.jpg",
         group: "Conselho de Instituidores",
         lattes: "http://lattes.cnpq.br/1840754571733900"
     },
