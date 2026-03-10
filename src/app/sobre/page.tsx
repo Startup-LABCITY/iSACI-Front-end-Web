@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Linkedin, Mail, MapPin, Phone, ExternalLink, Target, Globe, BookOpen, Users, Rocket, Lightbulb, ShieldCheck, Cpu, HeartHandshake, Leaf, Zap, Heart, Shield } from "lucide-react"
 
-import FachadaImage from "@/assets/Instituto/fachada.jpeg"
+import LetreiroImage from "@/assets/Instituto/letreiro3.jpeg"
 
 // Ícone oficial do Lattes (CNPq) - Estilizado 'L' acadêmico
 const LattesIcon = ({ className }: { className?: string }) => (
@@ -186,8 +186,8 @@ export default function SobrePage() {
                             className="relative h-[400px] rounded-3xl overflow-hidden border border-border/50 shadow-2xl group isolate"
                         >
                             <Image
-                                src={FachadaImage}
-                                alt="Fachada iSACI"
+                                src={LetreiroImage}
+                                alt="Letreiro iSACI"
                                 fill
                                 placeholder="blur"
                                 className="object-cover transition-transform duration-1000 group-hover:scale-110"
