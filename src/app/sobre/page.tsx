@@ -181,7 +181,9 @@ export default function SobrePage() {
                         <motion.div
                             initial={{ opacity: 0, x: 20 }}
                             whileInView={{ opacity: 1, x: 0 }}
-                            className="relative h-[400px] rounded-3xl overflow-hidden border border-border/50 shadow-2xl group"
+                            viewport={{ once: true, amount: 0.3 }}
+                            transition={{ duration: 0.8, ease: "easeOut" }}
+                            className="relative h-[400px] rounded-3xl overflow-hidden border border-border/50 shadow-2xl group isolate"
                         >
                             <Image
                                 src={FachadaImage}
@@ -382,8 +384,8 @@ export default function SobrePage() {
                     <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
                         {valores.map((valor, i) => (
                             <div key={i} className="flex gap-4 p-6 rounded-2xl border border-border bg-card/30 hover:bg-card/60 transition-colors">
-                                <div className="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10">
-                                    <valor.icon className="h-5 w-5 text-primary" />
+                                <div className="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary">
+                                    <valor.icon className="h-5 w-5 text-white" />
                                 </div>
                                 <div>
                                     <h4 className="font-semibold text-foreground text-lg">{valor.title}</h4>
