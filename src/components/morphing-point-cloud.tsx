@@ -203,13 +203,16 @@ export function MorphingPointCloud() {
             const numTreePts = 12000;
             const treePoints: { x: number, y: number, c: string, a: number, isTrunk: boolean }[] = [];
 
-            const treeBottom = dy + shapeDrawHeight - 30; // Lifted slightly for more room
-            const trunkHeight = shapeDrawHeight * 0.55;
+            // Keep the tree properly scaled to the screen height so it doesn't get cut off
+            const treeBottom = dy + shapeDrawHeight - 30;
+            const trunkHeight = shapeDrawHeight * 0.45; // Slightly shorter trunk to leave room for canopy
             const treeTop = treeBottom - trunkHeight;
             const centerX = dx + drawWidth * 0.5; // PERFECT CENTER to prevent clipping
 
-            const trunkBaseWidth = drawWidth * 0.6;
-            const trunkTopWidth = drawWidth * 0.12;
+            // Ensure width properties are proportional to height so they don't blow up on wide screens
+            const treeScale = Math.min(drawWidth, shapeDrawHeight * 1.2);
+            const trunkBaseWidth = treeScale * 0.4;
+            const trunkTopWidth = treeScale * 0.08;
 
             // 1. Massive Gaussian Trunk & Sapopemas
             for (let i = 0; i < numTreePts * 0.5; i++) {
@@ -230,11 +233,19 @@ export function MorphingPointCloud() {
             // 2. Majestic Branches and Foliage
             const branchAngles = [-Math.PI * 0.15, -Math.PI * 0.3, -Math.PI * 0.45, -Math.PI * 0.55, -Math.PI * 0.7, -Math.PI * 0.85, -Math.PI * 0.95];
             const clusterCenters: { x: number, y: number, r: number }[] = [];
+            const maxClusterR = treeScale * 0.22;
 
             branchAngles.forEach((angle) => {
-                // Shorten branches so they don't clip the top dy boundary
-                const maxLen = treeTop - dy;
-                const len = Math.min(maxLen * 0.9, trunkHeight * (0.5 + Math.random() * 0.4));
+                // Shorten branches mathematically so they don't clip the boundaries
+                const maxLenY = Math.max(0, treeTop - dy - maxClusterR - 10);
+                const maxLenX = Math.max(0, (drawWidth * 0.5) - maxClusterR - 10);
+
+                const boundY = maxLenY / Math.max(0.1, Math.abs(Math.sin(angle)));
+                const boundX = maxLenX / Math.max(0.1, Math.abs(Math.cos(angle)));
+
+                const maxLen = Math.min(boundX, boundY);
+                const len = Math.min(maxLen, trunkHeight * (0.6 + Math.random() * 0.4));
+
                 const branchEndX = centerX + Math.cos(angle) * len;
                 const branchEndY = treeTop + Math.sin(angle) * len;
 
@@ -251,11 +262,11 @@ export function MorphingPointCloud() {
                         clusterCenters.push({
                             x: centerX + Math.cos(angle) * len * t,
                             y: treeTop + Math.sin(angle) * len * t,
-                            r: drawWidth * (0.08 + t * 0.2) // Fuller clusters
+                            r: treeScale * (0.06 + t * 0.1) // Fuller clusters scaled appropriately
                         });
                     }
                 }
-                clusterCenters.push({ x: branchEndX, y: branchEndY, r: drawWidth * 0.25 });
+                clusterCenters.push({ x: branchEndX, y: branchEndY, r: maxClusterR });
             });
 
             for (let i = 0; i < numTreePts * 0.5; i++) {
@@ -322,7 +333,7 @@ export function MorphingPointCloud() {
                     ty: tPt.y,
                     color: sCol,
                     tColor: `rgba(${tR},${tG},${tB},1)`,
-                    size: isTrunk ? 1.0 : (1.5 + Math.random() * 2),
+                    size: isTrunk ? 3.0 : (4.0 + Math.random() * 3),
                     alpha: sAlpha,
                     tAlpha: isDarkMode ? (tPt.a / 255) * 0.8 : (tPt.a / 255) * 0.6,
                     isTrunk,
