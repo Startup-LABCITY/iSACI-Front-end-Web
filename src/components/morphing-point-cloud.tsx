@@ -28,6 +28,7 @@ export function MorphingPointCloud() {
     const [assembled, setAssembled] = useState(false);
     const [windowSize, setWindowSize] = useState([0, 0]);
     const mouseRef = useRef({ x: -1000, y: -1000 });
+    const firstLoadRef = useRef(true);
 
     // BOLEANO PARA HABILITAR/DESABILITAR CAPIVARA E PCT (MANTENHA FALSE PARA CICLO LOGO-ARVORE)
     const SHOW_EXTRAS = true;
@@ -104,6 +105,8 @@ export function MorphingPointCloud() {
         if (!canvas) return;
         const ctx = canvas.getContext("2d", { willReadFrequently: true });
         if (!ctx) return;
+
+        const startAtLogo = !assembled && !firstLoadRef.current;
 
         let frameId: number | null = null;
         const isDarkMode = resolvedTheme === "dark";
@@ -351,9 +354,12 @@ export function MorphingPointCloud() {
                 const tPt = logoPts[i] || { x: centerX, y: dy, r: 0, g: 0, b: 0, a: 0 };
                 const { r: tR, g: tG, b: tB } = tPt;
 
+                const initX = startAtLogo ? tPt.x : sPt.x;
+                const initY = startAtLogo ? tPt.y : sPt.y;
+
                 particles.push({
-                    x: sPt.x + (Math.random() - 0.5) * 40, // spread initial appearance slightly
-                    y: sPt.y + (Math.random() - 0.5) * 40,
+                    x: initX + (Math.random() - 0.5) * 40, // spread initial appearance slightly
+                    y: initY + (Math.random() - 0.5) * 40,
                     startX: sPt.x,
                     startY: sPt.y,
                     tx: tPt.x,
@@ -369,7 +375,7 @@ export function MorphingPointCloud() {
             }
 
             let frameCount = 0;
-            let currentImageAlpha = 0;
+            let currentImageAlpha = startAtLogo ? 1 : 0;
 
             const animateFrames = () => {
                 frameCount++;
@@ -442,6 +448,9 @@ export function MorphingPointCloud() {
                 if (assembled && localFinishedCount > particles.length * 0.4) {
                     currentImageAlpha += 0.03; // much faster fade in
                     if (currentImageAlpha > 1) currentImageAlpha = 1;
+                } else if (!assembled && currentImageAlpha > 0) {
+                    currentImageAlpha -= 0.05; // fade out the crisp logo on reverse animation
+                    if (currentImageAlpha < 0) currentImageAlpha = 0;
                 }
 
                 // Actually draw the *crisp* image of the logo when assembled
@@ -466,6 +475,7 @@ export function MorphingPointCloud() {
             };
 
             animateFrames();
+            firstLoadRef.current = false;
         };
 
         initParticles();
