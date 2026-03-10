@@ -194,8 +194,8 @@ export function MorphingPointCloud() {
 
                 const { data } = offCtx.getImageData(0, 0, w, h);
 
-                // Optimized sampling gap for significantly better performance
-                const sampleGap = isDesktop ? 6 : 8;
+                // Optimized sampling gap. Use a smaller gap for the Logo (idx === 2) to increase the definition/point-density drastically.
+                const sampleGap = (idx === 2) ? (isDesktop ? 4 : 5) : (isDesktop ? 6 : 8);
                 for (let y = 0; y < h; y += sampleGap) {
                     for (let x = 0; x < w; x += sampleGap) {
                         const index = (y * w + x) * 4;
@@ -388,14 +388,16 @@ export function MorphingPointCloud() {
                     let targetY = p.startY;
                     let drawColor = p.color;
                     let drawAlpha = p.alpha;
-                    let ease = 0.05;
+                    let drawSize = p.size;
+                    let ease = 0.035;
 
                     if (assembled) {
                         targetX = p.tx;
                         targetY = p.ty;
                         drawColor = p.tColor;
                         drawAlpha = p.tAlpha;
-                        ease = 0.07; // Much faster assembly for snappy feel
+                        drawSize = 2.0; // Smaller particle size when forming the logo to drastically increase visual definition
+                        ease = 0.025; // Smoother, lighter assembly for a more fluid feel
 
                         const dx_p = p.x - targetX;
                         const dy_p = p.y - targetY;
@@ -438,18 +440,18 @@ export function MorphingPointCloud() {
                     if (drawAlpha > 0) {
                         ctx.globalAlpha = drawAlpha;
                         ctx.fillStyle = drawColor;
-                        ctx.fillRect(p.x, p.y, p.size, p.size);
+                        ctx.fillRect(p.x, p.y, drawSize, drawSize);
                     }
                 }
 
                 ctx.globalAlpha = 1;
 
-                // When enough particles have hit the target, fade in the final Logo completely
-                if (assembled && localFinishedCount > particles.length * 0.4) {
-                    currentImageAlpha += 0.03; // much faster fade in
+                // When enough particles have hit the target, fade in the final Logo smoothly
+                if (assembled && localFinishedCount > particles.length * 0.55) {
+                    currentImageAlpha += 0.015; // smoother, more gradual fade in
                     if (currentImageAlpha > 1) currentImageAlpha = 1;
                 } else if (!assembled && currentImageAlpha > 0) {
-                    currentImageAlpha -= 0.05; // fade out the crisp logo on reverse animation
+                    currentImageAlpha -= 0.02; // graceful fade out of the crisp logo
                     if (currentImageAlpha < 0) currentImageAlpha = 0;
                 }
 
