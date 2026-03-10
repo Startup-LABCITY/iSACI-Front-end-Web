@@ -29,6 +29,9 @@ export function MorphingPointCloud() {
     const [windowSize, setWindowSize] = useState([0, 0]);
     const mouseRef = useRef({ x: -1000, y: -1000 });
 
+    // BOLEANO PARA HABILITAR/DESABILITAR CAPIVARA E PCT (MANTENHA FALSE PARA CICLO LOGO-ARVORE)
+    const SHOW_EXTRAS = true;
+
     useEffect(() => {
         // Sequentially pick initial shape on mount: 0=Capybara, 1=PCT, 2=Tree
         if (typeof window !== "undefined") {
@@ -49,6 +52,30 @@ export function MorphingPointCloud() {
     }, []);
 
     const isDesktopViewport = windowSize[0] >= 1024;
+
+    // 5-second Automatic Cycle
+    useEffect(() => {
+        if (!isDesktopViewport || initialShape === null) return;
+
+        const interval = setInterval(() => {
+            setAssembled(current => {
+                if (current) {
+                    // Moving away from Logo to a shape
+                    setInitialShape(prev => {
+                        if (!SHOW_EXTRAS) return 2; // Force Tree if extras disabled
+                        let next = (prev !== null ? prev + 1 : 0) % 3;
+                        return next;
+                    });
+                    return false;
+                } else {
+                    // Moving to Logo
+                    return true;
+                }
+            });
+        }, 5000);
+
+        return () => clearInterval(interval);
+    }, [isDesktopViewport, initialShape]);
 
     useEffect(() => {
         const handleMouseMove = (e: MouseEvent) => {
@@ -450,12 +477,16 @@ export function MorphingPointCloud() {
 
     return (
         <div
-            className="w-full h-[170px] sm:h-[220px] lg:h-full relative overflow-hidden flex items-center justify-center rounded-2xl cursor-default lg:cursor-pointer"
+            className="w-full h-[170px] sm:h-[220px] lg:h-full relative overflow-hidden flex items-center justify-center rounded-2xl cursor-default lg:cursor-pointer group"
             onClick={() => {
                 if (!isDesktopViewport) return;
 
                 if (assembled) {
-                    setInitialShape((prev) => (prev !== null ? (prev + 1) % 3 : 0));
+                    setInitialShape((prev) => {
+                        if (!SHOW_EXTRAS) return 2;
+                        let next = (prev !== null ? prev + 1 : 0) % 3;
+                        return next;
+                    });
                     setAssembled(false);
                 } else {
                     setAssembled(true);
