@@ -31,7 +31,7 @@ export function MorphingPointCloud() {
     const firstLoadRef = useRef(true);
 
     // BOLEANO PARA HABILITAR/DESABILITAR CAPIVARA E PCT (MANTENHA FALSE PARA CICLO LOGO-ARVORE)
-    const SHOW_EXTRAS = true;
+    const SHOW_EXTRAS = false;
 
     useEffect(() => {
         // Sequentially pick initial shape on mount: 0=Capybara, 1=PCT, 2=Tree
@@ -194,8 +194,8 @@ export function MorphingPointCloud() {
 
                 const { data } = offCtx.getImageData(0, 0, w, h);
 
-                // Optimized sampling gap. Use a smaller gap for the Logo (idx === 2) to increase the definition/point-density drastically.
-                const sampleGap = (idx === 2) ? (isDesktop ? 4 : 5) : (isDesktop ? 6 : 8);
+                // Optimized sampling gap. Use a balanced gap for the Logo (idx === 2) with thicker points for better performance.
+                const sampleGap = (idx === 2) ? (isDesktop ? 3 : 4) : (isDesktop ? 5 : 7);
                 for (let y = 0; y < h; y += sampleGap) {
                     for (let x = 0; x < w; x += sampleGap) {
                         const index = (y * w + x) * 4;
@@ -396,7 +396,7 @@ export function MorphingPointCloud() {
                         targetY = p.ty;
                         drawColor = p.tColor;
                         drawAlpha = p.tAlpha;
-                        drawSize = 2.0; // Smaller particle size when forming the logo to drastically increase visual definition
+                        drawSize = isDesktop ? 2.8 : 3.2; // Thicker particle size to cover more area with fewer points
                         ease = 0.025; // Smoother, lighter assembly for a more fluid feel
 
                         const dx_p = p.x - targetX;
