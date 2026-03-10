@@ -30,47 +30,47 @@ export default function Home() {
             <div className=" flex flex-col items-center lg:items-start text-center lg:text-left">
               <div className="w-full max-w-2xl">
                 <motion.h1
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-                    className="text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.1]"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                  className="text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.1]"
                 >
                   O motor da inovação na{" "}
-                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/60">
-              Amazônia
-            </span>
+                  <span className="inline-block bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+                    Amazônia
+                  </span>
                 </motion.h1>
 
                 <motion.p
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                    className="mt-8 text-lg sm:text-2xl text-muted-foreground leading-relaxed font-medium"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                  className="mt-8 text-lg sm:text-2xl text-muted-foreground leading-relaxed font-medium"
                 >
                   Transformamos conhecimento científico de ponta em progresso socioeconômico, fortalecendo a bioeconomia e a sustentabilidade regional.
                 </motion.p>
 
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                    className="mt-12 flex flex-col sm:flex-row justify-center lg:justify-start gap-6"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                  className="mt-12 flex flex-col sm:flex-row justify-center lg:justify-start gap-6"
                 >
                   <Button
-                      size="lg"
-                      className="h-14 px-10 text-lg bg-primary hover:bg-primary/90 text-primary-foreground font-bold rounded-full shadow-2xl shadow-primary/30 transition-all hover:scale-105"
-                      render={
-                        <Link href="/projetos">
-                          Conheça Nossos Projetos
-                          <ArrowRight className="ml-2 h-5 w-5" />
-                        </Link>
-                      }
+                    size="lg"
+                    className="h-14 px-10 text-lg bg-primary hover:bg-primary/90 text-primary-foreground font-bold rounded-full shadow-2xl shadow-primary/30 transition-all hover:scale-105"
+                    render={
+                      <Link href="/projetos">
+                        Conheça Nossos Projetos
+                        <ArrowRight className="ml-2 h-5 w-5" />
+                      </Link>
+                    }
                   />
                   <Button
-                      variant="outline"
-                      size="lg"
-                      className="h-14 px-10 text-lg font-bold rounded-full border-primary/20 hover:bg-primary/5 transition-all"
-                      render={<Link href="/sobre">Sobre o Instituto</Link>}
+                    variant="outline"
+                    size="lg"
+                    className="h-14 px-10 text-lg font-bold rounded-full border-primary/20 hover:bg-primary/5 transition-all"
+                    render={<Link href="/sobre">Sobre o Instituto</Link>}
                   />
                 </motion.div>
               </div>
@@ -239,8 +239,8 @@ export default function Home() {
               >
                 <Card className="flex flex-col gap-8 h-full bg-background border-border/50 hover:border-primary/30 transition-all duration-500 shadow-xl hover:shadow-2xl rounded-[2.5rem] overflow-hidden group">
                   <div className="h-64 bg-muted relative overflow-hidden">
-                  <div className="absolute inset-0 bg-slate-200 dark:bg-slate-800 group-hover:bg-slate-300 dark:group-hover:bg-slate-700 transition-colors" />
-                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="absolute inset-0 bg-slate-200 dark:bg-slate-800 group-hover:bg-slate-300 dark:group-hover:bg-slate-700 transition-colors" />
+                    <div className="absolute inset-0 flex items-center justify-center">
                       <project.icon className="w-24 h-24 text-slate-300 dark:text-slate-600 group-hover:scale-110 transition-transform duration-700" />
                     </div>
                   </div>
