@@ -46,7 +46,7 @@ export default function TransparenciaPage() {
                             <Card key={i} className="flex flex-col border-border/50 bg-card/30 hover:border-primary/30 transition-all duration-500 shadow-xl hover:shadow-2xl rounded-[2.5rem] group overflow-hidden">
                                 <CardHeader className="flex flex-row items-start justify-between p-10 pb-4">
                                     <div className="h-14 w-14 rounded-2xl bg-accent flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
-                                        <relatorio.icon className="h-7 w-7 text-primary" />
+                                        <relatorio.icon className="h-7 w-7 text-primary group-hover:text-primary-foreground transition-colors" />
                                     </div>
                                     <Badge variant={relatorio.status === "Disponível" ? "default" : "secondary"} className={cn(
                                         "px-4 py-1.5 rounded-full font-bold text-xs uppercase tracking-wider",

@@ -71,7 +71,7 @@ export default function ParceriasPage() {
                         ].map((item, i) => (
                             <div key={i} className="group bg-background rounded-[3rem] p-10 border border-border/50 shadow-sm hover:shadow-2xl hover:border-primary/20 transition-all duration-500 hover:-translate-y-2">
                                 <div className="h-16 w-16 mb-8 rounded-2xl bg-accent flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
-                                    <item.icon className="h-8 w-8 text-primary" />
+                                    <item.icon className="h-8 w-8 text-primary group-hover:text-primary-foreground transition-all duration-300" />
                                 </div>
                                 <h3 className="text-2xl font-bold mb-4 text-foreground">{item.title}</h3>
                                 <p className="text-muted-foreground leading-relaxed text-lg">{item.desc}</p>
