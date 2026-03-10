@@ -316,30 +316,49 @@ export default function SobrePage() {
                             <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-[#88b04b]/60">Apoio Institucional</h3>
                             <div className="h-px flex-1 bg-[#88b04b]/10" />
                         </div>
-                        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
                             {associados.map((assoc, i) => (
-                                <div key={i} className="relative flex items-center gap-5 p-5 rounded-2xl bg-white shadow-sm border border-black/5 hover:shadow-md transition-all group overflow-hidden">
-                                    <div className="absolute top-0 left-0 bottom-0 w-1 bg-[#88b04b]/40 group-hover:bg-[#88b04b] transition-colors" />
-                                    <div className="relative h-14 w-14 shrink-0 rounded-full overflow-hidden shadow-sm border-2 border-white ring-1 ring-black/5">
-                                        <Image
-                                            src={assoc.image}
-                                            alt={assoc.name}
-                                            fill
-                                            className="object-cover"
-                                        />
-                                    </div>
-                                    <div className="min-w-0">
-                                        <h4 className="text-sm font-bold text-foreground group-hover:text-[#88b04b] transition-colors truncate">{assoc.name}</h4>
-                                        <p className="text-[10px] text-[#88b04b] font-bold uppercase tracking-wider">{assoc.role}</p>
-                                        <div className="flex items-center gap-2 mt-2">
-                                            <a href={assoc.linkedin} target="_blank" rel="noreferrer" className="text-muted-foreground/30 hover:text-primary transition-colors">
-                                                <Linkedin className="h-3 w-3" />
-                                            </a>
-                                            <div className="h-3 w-px bg-border" />
-                                            <Mail className="h-3 w-3 text-muted-foreground/30" />
+                                <Card key={i} className="group relative flex flex-col items-center p-6 border-none bg-background shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07)] hover:shadow-[0_10px_25px_-5px_rgba(0,0,0,0.1)] transition-all duration-300">
+                                    <div className="absolute top-0 left-0 right-0 h-[3px] bg-[#88b04b]/70" />
+
+                                    <div className="relative w-24 h-24 mb-4">
+                                        <div className="absolute inset-0 rounded-full overflow-hidden border-2 border-background shadow-xs ring-1 ring-border/20">
+                                            <Image
+                                                src={assoc.image}
+                                                alt={assoc.name}
+                                                fill
+                                                className="object-cover"
+                                            />
                                         </div>
                                     </div>
-                                </div>
+                                    <div className="text-center flex-1 flex flex-col items-center">
+                                        <h4 className="text-[15px] font-bold text-foreground leading-tight mb-2 min-h-[2.5rem] flex items-center justify-center">{assoc.name}</h4>
+                                        <p className="text-[10px] text-[#88b04b] uppercase tracking-wider mb-2 font-bold max-w-[200px] leading-snug">{assoc.role}</p>
+                                        <div className="flex items-center gap-1.5 text-muted-foreground/60 mb-4 text-[11px]">
+                                            <Mail className="h-3 w-3" />
+                                            <span className="truncate max-w-[120px]">contato@isaci.org.br</span>
+                                        </div>
+                                        <p className="text-xs text-muted-foreground/60 mb-6 italic line-clamp-3">
+                                            {assoc.bio}
+                                        </p>
+                                    </div>
+
+                                    {/* Lattes / LinkedIn links at corners */}
+                                    <div className="absolute bottom-3 right-3 text-[#88b04b]/30 group-hover:text-[#88b04b] transition-colors">
+                                        {assoc.lattes && (
+                                            <a href={assoc.lattes} target="_blank" rel="noreferrer" title="Currículo Lattes">
+                                                <LattesIcon className="h-4 w-4" />
+                                            </a>
+                                        )}
+                                    </div>
+                                    <div className="absolute bottom-3 left-3 text-muted-foreground/30 hover:text-primary transition-colors">
+                                        {assoc.linkedin && (
+                                            <a href={assoc.linkedin} target="_blank" rel="noreferrer" title="LinkedIn">
+                                                <Linkedin className="h-4 w-4" />
+                                            </a>
+                                        )}
+                                    </div>
+                                </Card>
                             ))}
                         </div>
                     </div>
