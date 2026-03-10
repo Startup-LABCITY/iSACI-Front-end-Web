@@ -36,9 +36,18 @@ export default function Home() {
                   className="text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.1]"
                 >
                   O motor da inovação na{" "}
-                  <span className="inline-block bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent [-webkit-background-clip:text] [-webkit-text-fill-color:transparent]">
-                    Amazônia
-                  </span>
+                  <span className="
+    relative
+    inline-block
+    bg-gradient-to-r from-primary to-primary/60
+    bg-clip-text
+    [-webkit-background-clip:text]
+    text-transparent
+    [-webkit-text-fill-color:transparent]
+    [isolation:isolate]
+">
+  Amazônia
+</span>
                 </motion.h1>
 
                 <motion.p
