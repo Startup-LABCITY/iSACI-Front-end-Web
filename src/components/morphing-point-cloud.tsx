@@ -29,11 +29,13 @@ export function MorphingPointCloud() {
     const [windowSize, setWindowSize] = useState([0, 0]);
     const mouseRef = useRef({ x: -1000, y: -1000 });
     const firstLoadRef = useRef(true);
+    const [mounted, setMounted] = useState(false);
 
     // BOLEANO PARA HABILITAR/DESABILITAR CAPIVARA E PCT (MANTENHA FALSE PARA CICLO LOGO-ARVORE)
     const SHOW_EXTRAS = false;
 
     useEffect(() => {
+        setMounted(true);
         // Sequentially pick initial shape on mount: 0=Capybara, 1=PCT, 2=Tree
         if (typeof window !== "undefined") {
             const lastShape = parseInt(localStorage.getItem("isaci_last_shape") || "-1");
@@ -132,7 +134,7 @@ export function MorphingPointCloud() {
         const imagesSrc = [
             "/assets/capivara.svg",
             "/assets/espaco_inovacao.svg",
-            "/assets/logo.png"
+            isDarkMode ? "/assets/logo_isaci/Logos iSACI-03.png" : "/assets/logo.png"
         ];
 
         const images = imagesSrc.map(src => {
@@ -218,7 +220,10 @@ export function MorphingPointCloud() {
                             const isPureWhite = (r > 240 && g > 240 && b > 240);
                             isBg = isBlueSky || isPureWhite;
                         } else {
-                            isBg = r > 240 && g > 240 && b > 240;
+                            // Preserve pure white pixels for the dark mode logo since the text is white
+                            if (!isDarkMode) {
+                                isBg = r > 240 && g > 240 && b > 240;
+                            }
                         }
 
                         if (a > 80 && !isBg) {
@@ -509,14 +514,18 @@ export function MorphingPointCloud() {
             {/* Mobile: compact logo area to preserve visual proportion without consuming hero height */}
             <div className="flex lg:hidden w-full h-full items-center justify-center px-4">
                 <div className="w-full max-w-[320px] aspect-[16/9] flex items-center justify-center">
-                    <NextImage
-                        src="/assets/logo.png"
-                        alt="iSACI Logo"
-                        width={320}
-                        height={120}
-                        className="w-full h-auto object-contain drop-shadow-2xl"
-                        priority
-                    />
+                    {mounted ? (
+                        <NextImage
+                            src={resolvedTheme === "dark" ? "/assets/logo_isaci/Logos iSACI-03.png" : "/assets/logo.png"}
+                            alt="iSACI Logo"
+                            width={320}
+                            height={120}
+                            className="w-full h-auto object-contain drop-shadow-2xl"
+                            priority
+                        />
+                    ) : (
+                        <div className="w-full h-full bg-transparent"></div> // Invisible placeholder during SSR
+                    )}
                 </div>
             </div>
 
