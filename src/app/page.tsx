@@ -9,8 +9,7 @@ import { MorphingPointCloud } from "@/components/morphing-point-cloud"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { StatsCounter } from "@/components/stats-counter"
 import { SectionHeader } from "@/components/section-header"
-
-import HeroImage from "@/assets/Instituto/gestores2.jpeg"
+import { TeamCarousel } from "@/components/TeamCarousel"
 
 export default function Home() {
   const stats = [
@@ -175,29 +174,7 @@ export default function Home() {
               </div>
             </div>
 
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              className="relative rounded-[3rem] overflow-hidden aspect-[4/5] lg:h-[700px] border border-border shadow-2xl group"
-            >
-              <div className="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent mix-blend-multiply opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-              <div className="absolute inset-0">
-                <Image
-                  src={HeroImage}
-                  alt="Equipe iSACI"
-                  fill
-                  placeholder="blur"
-                  className="object-cover transition-transform duration-1000 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-slate-950 mix-blend-multiply opacity-0 group-hover:opacity-10 transition-opacity duration-700" />
-              </div>
-              <div className="absolute bottom-10 left-10 right-10 bg-background/95 backdrop-blur-xl p-10 rounded-[2rem] border border-border/50 shadow-2xl transform transition-transform duration-500 group-hover:-translate-y-2">
-                <p className="text-xl font-extrabold text-foreground leading-tight italic">
-                  &#34;Unindo academia, setor produtivo e governo para transformar a Amazônia através da excelência científica.&#34;
-                </p>
-              </div>
-            </motion.div>
+            <TeamCarousel />
           </div>
         </div>
       </section>
@@ -295,3 +272,4 @@ export default function Home() {
     </div>
   )
 }
+
