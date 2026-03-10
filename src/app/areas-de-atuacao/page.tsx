@@ -62,7 +62,7 @@ export default function AreasDeAtuacaoPage() {
                         {servicos.map((servico, i) => (
                             <Card key={i} className="bg-card border-border/50 hover:border-primary/50 transition-colors shadow-sm group">
                                 <CardHeader>
-                                    <div className="h-14 w-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300">
+                                    <div className="h-14 w-14 rounded-2xl bg-accent flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300">
                                         <servico.icon className="h-7 w-7 text-primary group-hover:text-white transition-colors duration-300" />
                                     </div>
                                     <CardTitle className="text-xl">{servico.title}</CardTitle>
@@ -94,7 +94,7 @@ export default function AreasDeAtuacaoPage() {
                         {pilaresNegoio.map((pilar, i) => (
                             <div key={i} className="flex flex-col items-center text-center">
                                 <div className="h-20 w-20 rounded-full bg-background border border-border shadow-sm flex items-center justify-center mb-6 relative">
-                                    <div className="absolute inset-0 rounded-full bg-primary/10 opacity-0 hover:opacity-100 scale-150 blur-xl transition-all duration-300" />
+                                    <div className="absolute inset-0 rounded-full bg-accent opacity-0 hover:opacity-100 scale-150 blur-xl transition-all duration-300" />
                                     <pilar.icon className="h-8 w-8 text-primary relative z-10" />
                                 </div>
                                 <h3 className="text-xl font-semibold mb-3">{pilar.title}</h3>

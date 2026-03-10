@@ -45,8 +45,8 @@ export default function TransparenciaPage() {
                         {relatorios.map((relatorio, i) => (
                             <Card key={i} className="flex flex-col border-border/50 bg-card/30 hover:border-primary/30 transition-all duration-500 shadow-xl hover:shadow-2xl rounded-[2.5rem] group overflow-hidden">
                                 <CardHeader className="flex flex-row items-start justify-between p-10 pb-4">
-                                    <div className="h-14 w-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
-                                        <relatorio.icon className="h-7 w-7" />
+                                    <div className="h-14 w-14 rounded-2xl bg-accent flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
+                                        <relatorio.icon className="h-7 w-7 text-primary" />
                                     </div>
                                     <Badge variant={relatorio.status === "Disponível" ? "default" : "secondary"} className={cn(
                                         "px-4 py-1.5 rounded-full font-bold text-xs uppercase tracking-wider",
@@ -78,7 +78,7 @@ export default function TransparenciaPage() {
 
             {/* Documentos de Governança */}
             <section className="py-32 bg-secondary/20 border-y border-border/50 relative overflow-hidden">
-                <div className="absolute inset-0 bg-primary/[0.02] pointer-events-none" />
+                <div className="absolute inset-0 bg-primary-foreground pointer-events-none" />
                 <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 relative z-10">
                     <SectionHeader
                         eyebrow="Conformidade"
@@ -92,7 +92,7 @@ export default function TransparenciaPage() {
                                 <AccordionItem key={i} value={`item-${i}`} className="border-border/30 px-8 [&:last-child]:border-0 overflow-hidden">
                                     <AccordionTrigger className="hover:no-underline hover:text-primary text-left font-bold text-xl py-8 transition-colors">
                                         <div className="flex items-center gap-4">
-                                            <div className="h-10 w-10 rounded-xl bg-primary/5 flex items-center justify-center text-primary group-hover:bg-primaryTransition">
+                                            <div className="h-10 w-10 rounded-xl bg-primary-foreground flex items-center justify-center text-primary group-hover:bg-primaryTransition">
                                                 <Scale className="h-5 w-5" />
                                             </div>
                                             {doc.title}
@@ -124,8 +124,8 @@ export default function TransparenciaPage() {
                             <div className="space-y-6">
                                 <div className="p-10 border border-border/50 rounded-[2.5rem] bg-card/30 hover:bg-card/50 hover:border-primary/20 transition-all duration-300 shadow-sm relative group">
                                     <div className="flex justify-between items-start mb-6">
-                                        <Badge variant="outline" className="px-3 py-1 bg-primary/10 text-primary border-primary/20 text-[10px] font-bold uppercase tracking-widest">Vigente</Badge>
-                                        <FileSignature className="h-6 w-6 text-primary/40 group-hover:text-primary transition-colors" />
+                                        <Badge variant="outline" className="px-3 py-1 bg-accent text-primary border-primary/20 text-[10px] font-bold uppercase tracking-widest">Vigente</Badge>
+                                        <FileSignature className="h-6 w-6 text-primary group-hover:text-primary transition-colors" />
                                     </div>
                                     <h4 className="font-extrabold text-2xl mb-2 tracking-tight">Contrato nº 12/2024 - Auditoria</h4>
                                     <p className="text-muted-foreground text-lg mb-6">Serviços especializados de auditoria independente para verificação de contas.</p>
@@ -135,7 +135,7 @@ export default function TransparenciaPage() {
                                 <div className="p-10 border border-border/50 rounded-[2.5rem] bg-card/30 hover:bg-card/50 hover:border-primary/20 transition-all duration-300 shadow-sm relative group">
                                     <div className="flex justify-between items-start mb-6">
                                         <Badge variant="outline" className="px-3 py-1 bg-primary text-primary-foreground border-0 text-[10px] font-bold uppercase tracking-widest">Assinado</Badge>
-                                        <FileSignature className="h-6 w-6 text-primary/40 group-hover:text-primary transition-colors" />
+                                        <FileSignature className="h-6 w-6 text-primary group-hover:text-primary transition-colors" />
                                     </div>
                                     <h4 className="font-extrabold text-2xl mb-2 tracking-tight">Termo de Fomento nº 03/2024</h4>
                                     <p className="text-muted-foreground text-lg mb-6">Instrumento jurídico firmado para a execução de atividades de desenvolvimento comunitário.</p>
@@ -153,14 +153,14 @@ export default function TransparenciaPage() {
                             </div>
 
                             <div className="grid grid-cols-2 gap-6">
-                                <div className="p-10 border border-border/50 rounded-[2.5rem] bg-primary/5 text-center flex flex-col items-center justify-center group hover:bg-primary/10 transition-colors">
+                                <div className="p-10 border border-border/50 rounded-[2.5rem] bg-accent text-center flex flex-col items-center justify-center group hover:bg-primary/10 transition-colors">
                                     <CheckCircle2 className="h-10 w-10 text-primary mb-6 transition-transform group-hover:scale-110" />
                                     <div className="text-5xl font-extrabold text-foreground mb-2 tracking-tighter">100%</div>
                                     <div className="text-sm text-muted-foreground font-bold uppercase tracking-wider">Publicação Mensal</div>
                                 </div>
                                 <div className="p-10 border border-border/50 rounded-[2.5rem] bg-card text-center flex flex-col items-center justify-center group hover:border-primary/20 transition-all">
                                     <ShieldCheck className="h-10 w-10 text-primary/40 mb-6 group-hover:text-primary transition-colors" />
-                                    <div className="text-5xl font-extrabold text-foreground mb-2 tracking-tighter">零</div>
+                                    <div className="text-5xl font-extrabold text-foreground mb-2 tracking-tighter">0</div>
                                     <div className="text-sm text-muted-foreground font-bold uppercase tracking-wider">Irregularidades</div>
                                 </div>
                                 <div className="p-10 border border-border/50 rounded-[2.5rem] bg-card text-center flex flex-col items-center justify-center group hover:border-primary/20 transition-all">

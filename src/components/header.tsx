@@ -145,8 +145,8 @@ export function Header() {
                                                 className={cn(
                                                     "flex items-center px-6 py-4 text-lg font-semibold rounded-2xl transition-all h-16",
                                                     pathname === link.href
-                                                        ? "text-primary bg-primary/10 shadow-sm border border-primary/20"
-                                                        : "text-muted-foreground hover:text-primary hover:bg-primary/5"
+                                                        ? "text-primary bg-shade-100 shadow-sm border border-primary"
+                                                        : "text-muted-foreground hover:text-primary hover:bg-primary"
                                                 )}
                                             >
                                                 {link.label}

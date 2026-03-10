@@ -211,7 +211,7 @@ export default function ProjetosPage() {
                                 </Badge>
                             </div>
                             <div className="p-8 flex flex-col flex-1">
-                                <Badge className="w-fit mb-4 bg-primary/10 text-primary hover:bg-primary/20 border-0">IoT / IA / 5G</Badge>
+                                <Badge className="w-fit mb-4 bg-accent/20 text-accent-foreground hover:bg-accent/30 border-0">IoT / IA / 5G</Badge>
                                 <h3 className="text-2xl font-bold mb-4 line-clamp-3 leading-tight">Modernização de Sistemas Legados e Expansão das Infovias Digitais</h3>
                                 <p className="text-muted-foreground mb-6 flex-1">
                                     Projeto de inovação tecnológica destinado à modernização de sistemas legados críticos da infraestrutura digital do Estado do Pará e à expansão das infovias digitais, incluindo preparação para demandas de alto volume no contexto da COP30 via Nuvem e Edge Computing.
@@ -276,7 +276,7 @@ export default function ProjetosPage() {
                                     <p className="text-sm text-muted-foreground leading-relaxed flex-1">
                                         {item.desc}
                                     </p>
-                                    <div className="mt-6 text-xs font-semibold text-foreground bg-primary/5 p-3 rounded-xl border border-primary/10">
+                                    <div className="mt-6 text-xs font-semibold text-foreground bg-primary-foreground p-3 rounded-xl border border-primary">
                                         <span className="text-muted-foreground block text-[10px] uppercase tracking-wider mb-1">Cliente</span>
                                         {item.client}
                                     </div>
@@ -332,7 +332,7 @@ export default function ProjetosPage() {
                                     <p className="text-sm text-muted-foreground mb-2 font-medium">{pub.authors}</p>
                                     <div className="flex items-center gap-3 text-xs text-muted-foreground">
                                         <span className="italic">{pub.journal}</span>
-                                        <span className="px-2 py-0.5 rounded-md bg-accent/20 text-accent-foreground font-semibold">{pub.year}</span>
+                                        <span className="px-2 py-0.5 rounded-md bg-accent text-accent-foreground font-semibold">{pub.year}</span>
                                     </div>
                                 </div>
                             </div>

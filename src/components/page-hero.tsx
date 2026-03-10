@@ -26,7 +26,7 @@ export function PageHero({ title, subtitle, highlight, className }: PageHeroProp
 
             <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
                 {highlight && (
-                    <span className="inline-block mb-4 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-primary bg-primary/10 rounded-full">
+                    <span className="inline-block mb-4 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-primary bg-accent rounded-full">
                         {highlight}
                     </span>
                 )}

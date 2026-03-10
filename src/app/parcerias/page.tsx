@@ -70,8 +70,8 @@ export default function ParceriasPage() {
                             { icon: GraduationCap, title: "Educação & Futuro", desc: "Programas de formação técnica para fortalecer a economia regional e o empreendedorismo local." }
                         ].map((item, i) => (
                             <div key={i} className="group bg-background rounded-[3rem] p-10 border border-border/50 shadow-sm hover:shadow-2xl hover:border-primary/20 transition-all duration-500 hover:-translate-y-2">
-                                <div className="h-16 w-16 mb-8 rounded-2xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
-                                    <item.icon className="h-8 w-8" />
+                                <div className="h-16 w-16 mb-8 rounded-2xl bg-accent flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
+                                    <item.icon className="h-8 w-8 text-primary" />
                                 </div>
                                 <h3 className="text-2xl font-bold mb-4 text-foreground">{item.title}</h3>
                                 <p className="text-muted-foreground leading-relaxed text-lg">{item.desc}</p>
@@ -88,6 +88,7 @@ export default function ParceriasPage() {
 
                 <div className="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
                     <SectionHeader
+                        variant="on-dark"
                         centered={true}
                         eyebrow="Vamos construir juntos"
                         title="Sua visão, nossa excelência"
