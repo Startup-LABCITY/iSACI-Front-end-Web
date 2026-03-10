@@ -36,7 +36,7 @@ export default function Home() {
                     className="text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.1]"
                 >
                   O motor da inovação na{" "}
-                  <span className="text-primary bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/60">
+                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/60">
               Amazônia
             </span>
                 </motion.h1>
@@ -85,7 +85,7 @@ export default function Home() {
       </section>
 
       {/* Stats Section - Polished */}
-      <section className="relative pt-16 z-20 px-4">
+      <section className="relative py-16 z-20 px-4">
         <div className="mx-auto max-w-7xl bg-card/60 backdrop-blur-2xl rounded-[32px] border border-border/50 shadow-2xl p-4 sm:p-8 lg:p-12">
           <StatsCounter stats={stats} />
         </div>
