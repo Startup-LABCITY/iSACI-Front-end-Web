@@ -16,7 +16,8 @@ export function PageHero({ title, subtitle, highlight, className }: PageHeroProp
                 className
             )}
         >
-            <ShaderBackground />
+            {/* TODO: Voltar ShaderBackground depois de melhorar a página */}
+            {/* <ShaderBackground /> */}
 
             {/* Decorative Elements */}
             <div className="absolute top-10 right-10 h-32 w-32 rounded-full bg-primary/10 blur-2xl pointer-events-none" />
