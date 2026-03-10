@@ -40,14 +40,14 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
             disableTransitionOnChange
         >
             <QueryProvider>
-                <LoadingScreen isLoading={isLoading} />
+                {/*<LoadingScreen isLoading={isLoading} />*/}
                 <div
                     className="flex flex-col min-h-screen transition-opacity duration-1000"
-                    style={{
-                        opacity: isLoading ? 0 : 1,
-                        visibility: isLoading ? "hidden" : "visible",
-                        pointerEvents: isLoading ? "none" : "auto"
-                    }}
+                    // style={{
+                    //     opacity: isLoading ? 0 : 1,
+                    //     visibility: isLoading ? "hidden" : "visible",
+                    //     pointerEvents: isLoading ? "none" : "auto"
+                    // }}
                 >
                     <Header />
                     <main className="flex-1">

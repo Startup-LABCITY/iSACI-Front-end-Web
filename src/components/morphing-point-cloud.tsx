@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useTheme } from "next-themes";
+import NextImage from "next/image";
 
 type Particle = {
     x: number;
@@ -42,9 +43,12 @@ export function MorphingPointCloud() {
 
     useEffect(() => {
         const handleResize = () => setWindowSize([window.innerWidth, window.innerHeight]);
+        handleResize();
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
     }, []);
+
+    const isDesktopViewport = windowSize[0] >= 1024;
 
     useEffect(() => {
         const handleMouseMove = (e: MouseEvent) => {
@@ -75,7 +79,7 @@ export function MorphingPointCloud() {
         if (!ctx) return;
 
         let frameId: number | null = null;
-        let isDarkMode = resolvedTheme === "dark";
+        const isDarkMode = resolvedTheme === "dark";
 
         const parent = canvas.parentElement;
         const w = parent ? parent.clientWidth : window.innerWidth;
@@ -204,7 +208,6 @@ export function MorphingPointCloud() {
             const treeTop = treeBottom - trunkHeight;
             const centerX = dx + drawWidth * 0.5; // PERFECT CENTER to prevent clipping
 
-            const canopyWidth = drawWidth * 0.7; // Narrowed to guarantee no edge clipping
             const trunkBaseWidth = drawWidth * 0.6;
             const trunkTopWidth = drawWidth * 0.12;
 
@@ -278,11 +281,14 @@ export function MorphingPointCloud() {
             const maxPoints = Math.max(logoPts.length, shapePoints[0].length, shapePoints[1].length, treePoints.length, numTreePts);
 
             // Pad the shape arrays
-            ([logoPts, shapePoints[0], shapePoints[1], treePoints] as any[][]).forEach(arr => {
+            [logoPts, shapePoints[0], shapePoints[1]].forEach(arr => {
                 while (arr.length > 0 && arr.length < maxPoints) {
                     arr.push(...arr.slice(0, maxPoints - arr.length));
                 }
             });
+            while (treePoints.length > 0 && treePoints.length < maxPoints) {
+                treePoints.push(...treePoints.slice(0, maxPoints - treePoints.length));
+            }
 
             const particles: Particle[] = [];
 
@@ -305,7 +311,7 @@ export function MorphingPointCloud() {
                 if (!sPt) sPt = { x: centerX, y: treeBottom };
 
                 const tPt = logoPts[i] || { x: centerX, y: dy, r: 0, g: 0, b: 0, a: 0 };
-                let tR = tPt.r, tG = tPt.g, tB = tPt.b;
+                const { r: tR, g: tG, b: tB } = tPt;
 
                 particles.push({
                     x: sPt.x + (Math.random() - 0.5) * 40, // spread initial appearance slightly
@@ -433,9 +439,9 @@ export function MorphingPointCloud() {
 
     return (
         <div
-            className="w-full h-full relative overflow-hidden cursor-pointer flex items-center justify-center rounded-2xl"
+            className="w-full h-[170px] sm:h-[220px] lg:h-full relative overflow-hidden flex items-center justify-center rounded-2xl cursor-default lg:cursor-pointer"
             onClick={() => {
-                if (typeof window !== "undefined" && window.innerWidth < 1024) return;
+                if (!isDesktopViewport) return;
 
                 if (assembled) {
                     setInitialShape((prev) => (prev !== null ? (prev + 1) % 3 : 0));
@@ -444,14 +450,23 @@ export function MorphingPointCloud() {
                     setAssembled(true);
                 }
             }}
-            title={assembled ? "Clique para ver a próxima imagem" : "Clique para revelar a Logomarca"}
+            title={isDesktopViewport ? (assembled ? "Clique para ver a próxima imagem" : "Clique para revelar a Logomarca") : ""}
         >
-            {/* Visão Mobile: Renderiza APENAS a Logo */}
-            <div className="flex lg:hidden w-full h-full items-center justify-center p-6">
-                <img src="/assets/logo.png" alt="iSACI Logo" className="max-w-[280px] sm:max-w-[340px] max-h-full object-contain filter drop-shadow-2xl" />
+            {/* Mobile: compact logo area to preserve visual proportion without consuming hero height */}
+            <div className="flex lg:hidden w-full h-full items-center justify-center px-4">
+                <div className="w-full max-w-[320px] aspect-[16/9] flex items-center justify-center">
+                    <NextImage
+                        src="/assets/logo.png"
+                        alt="iSACI Logo"
+                        width={320}
+                        height={120}
+                        className="w-full h-auto object-contain drop-shadow-2xl"
+                        priority
+                    />
+                </div>
             </div>
 
-            {/* Visão Desktop: Renderiza a Animação Canvas */}
+            {/* Desktop: canvas animation */}
             <canvas
                 ref={canvasRef}
                 className="hidden lg:block w-full h-full touch-none pointer-events-auto"

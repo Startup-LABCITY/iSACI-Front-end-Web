@@ -5,84 +5,94 @@ import Link from "next/link"
 import { motion } from "framer-motion"
 import { ArrowRight, Leaf, Lightbulb, Users } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { cn } from "@/lib/utils"
 import { MorphingPointCloud } from "@/components/morphing-point-cloud"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { StatsCounter } from "@/components/stats-counter"
 import { SectionHeader } from "@/components/section-header"
 
 import HeroImage from "@/assets/Instituto/gestores2.jpeg"
-// Removed HeroLogo as the particle cloud forms it
 
 export default function Home() {
   const stats = [
     { value: "90+", label: "Colaboradores" },
     { value: "10", label: "Pesquisadores Fundadores" },
-    { value: "2023", label: "Ano de Fundação" },
+    { value: "2023", label: "Ano de Fundação", animate: false },
     { value: "5+", label: "Parcerias Estratégicas" },
   ]
 
   return (
     <div className="flex flex-col min-h-screen">
-      <section className="relative overflow-hidden bg-background min-h-[90vh] flex items-center pt-24 pb-12 lg:pb-0">
+      <section className="relative overflow-hidden bg-background min-h-[65vh] lg:min-h-[65vh] [@media(min-width:3000px)]:h-[30vh] pt-16 sm:pt-20 lg:pt-24">
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-10 lg:gap-12 min-h-[70vh]">
 
+            {/* Left Column */}
+            <div className=" flex flex-col items-center lg:items-start text-center lg:text-left">
+              <div className="w-full max-w-2xl">
+                <motion.h1
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                    className="text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.1]"
+                >
+                  O motor da inovação na{" "}
+                  <span className="text-primary bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/60">
+              Amazônia
+            </span>
+                </motion.h1>
 
-        <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 mt-12 flex flex-col-reverse lg:flex-row items-center justify-between z-10 lg:py-0">
+                <motion.p
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                    className="mt-8 text-lg sm:text-2xl text-muted-foreground leading-relaxed font-medium"
+                >
+                  Transformamos conhecimento científico de ponta em progresso socioeconômico, fortalecendo a bioeconomia e a sustentabilidade regional.
+                </motion.p>
 
-          {/* Left Column: Text */}
-          <div className="flex flex-col items-center lg:items-start text-center lg:text-left w-full lg:w-[42%] z-20 mt-12 lg:-mt-24 relative">
-            <div className="w-full">
-              <motion.h1
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-                className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.1]"
-              >
-                O motor da inovação na <span className="text-primary bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/60">Amazônia</span>
-              </motion.h1>
-
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                className="mt-8 text-lg sm:text-2xl text-muted-foreground leading-relaxed font-medium max-w-2xl"
-              >
-                Transformamos conhecimento científico de ponta em progresso socioeconômico, fortalecendo a bioeconomia e a sustentabilidade regional.
-              </motion.p>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                className="mt-12 flex flex-col sm:flex-row justify-center lg:justify-start gap-6 w-full"
-              >
-                <Button size="lg" className="h-14 px-10 text-lg bg-primary hover:bg-primary/90 text-primary-foreground font-bold rounded-full shadow-2xl shadow-primary/30 transition-all hover:scale-105" render={<Link href="/projetos">
-                  Conheça Nossos Projetos
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>} />
-                <Button variant="outline" size="lg" className="h-14 px-10 text-lg font-bold rounded-full border-primary/20 hover:bg-primary/5 transition-all" render={<Link href="/sobre">
-                  Sobre o Instituto
-                </Link>} />
-              </motion.div>
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                    className="mt-12 flex flex-col sm:flex-row justify-center lg:justify-start gap-6"
+                >
+                  <Button
+                      size="lg"
+                      className="h-14 px-10 text-lg bg-primary hover:bg-primary/90 text-primary-foreground font-bold rounded-full shadow-2xl shadow-primary/30 transition-all hover:scale-105"
+                      render={
+                        <Link href="/projetos">
+                          Conheça Nossos Projetos
+                          <ArrowRight className="ml-2 h-5 w-5" />
+                        </Link>
+                      }
+                  />
+                  <Button
+                      variant="outline"
+                      size="lg"
+                      className="h-14 px-10 text-lg font-bold rounded-full border-primary/20 hover:bg-primary/5 transition-all"
+                      render={<Link href="/sobre">Sobre o Instituto</Link>}
+                  />
+                </motion.div>
+              </div>
             </div>
-          </div>
 
-          {/* Right Column: Canvas Component */}
-          <div className="w-full lg:w-[58%] h-[60vh] lg:h-[85vh] relative z-10 flex items-start justify-center lg:justify-end -mt-10 lg:-mt-20 lg:-mr-8">
-            <MorphingPointCloud />
+            {/* Right Column */}
+            <div className="order-first lg:order-last flex items-center justify-center lg:justify-end h-auto lg:h-[560px]">
+              <MorphingPointCloud />
+            </div>
           </div>
         </div>
       </section>
 
       {/* Stats Section - Polished */}
-      <section className="relative z-20 px-4">
-        <div className="mx-auto max-w-7xl bg-card/60 backdrop-blur-2xl rounded-[2.5rem] border border-border/50 shadow-2xl p-8 lg:p-12">
+      <section className="relative pt-16 z-20 px-4">
+        <div className="mx-auto max-w-7xl bg-card/60 backdrop-blur-2xl rounded-[32px] border border-border/50 shadow-2xl p-4 sm:p-8 lg:p-12">
           <StatsCounter stats={stats} />
         </div>
       </section>
 
       {/* Pitch / Features Section */}
-      <section className="relative py-32 overflow-hidden bg-background">
+      <section className="relative py-16 sm:py-32 overflow-hidden bg-background">
         <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-border to-transparent" />
         <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-border to-transparent" />
 
@@ -114,7 +124,7 @@ export default function Home() {
                 className="group p-10 rounded-[2rem] bg-card/30 border border-border/50 hover:border-primary/50 transition-all duration-500 relative overflow-hidden"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="h-16 w-16 mb-8 rounded-2xl bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 transition-transform duration-500">
+                <div className="h-16 w-16 mb-8 rounded-2xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-primary group-hover:scale-110 transition-transform duration-500">
                   <feature.icon className="w-8 h-8" />
                 </div>
                 <h3 className="text-2xl font-bold mb-4 text-foreground">{feature.title}</h3>
@@ -126,7 +136,7 @@ export default function Home() {
       </section>
 
       {/* About Summary Section */}
-      <section className="py-32 bg-background relative overflow-hidden">
+      <section className="py-16 sm:py-32 bg-background relative overflow-hidden">
         <div className="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/2 w-[800px] h-[800px] rounded-full bg-primary/5 blur-[120px] pointer-events-none" />
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-20 items-center">
@@ -153,7 +163,7 @@ export default function Home() {
                     transition={{ delay: i * 0.1 }}
                     className="flex gap-6 group"
                   >
-                    <div className="mt-1 flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-primary/10 border border-primary/20 group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
+                    <div className="mt-1 flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
                       <item.icon className="h-6 w-6 text-primary group-hover:text-primary-foreground transition-colors" />
                     </div>
                     <div>
@@ -180,11 +190,11 @@ export default function Home() {
                   placeholder="blur"
                   className="object-cover transition-transform duration-1000 group-hover:scale-110"
                 />
-                <div className="absolute inset-0 bg-primary/10 mix-blend-multiply group-hover:bg-transparent transition-colors duration-700" />
+                <div className="absolute inset-0 bg-slate-950 mix-blend-multiply opacity-0 group-hover:opacity-10 transition-opacity duration-700" />
               </div>
               <div className="absolute bottom-10 left-10 right-10 bg-background/95 backdrop-blur-xl p-10 rounded-[2rem] border border-border/50 shadow-2xl transform transition-transform duration-500 group-hover:-translate-y-2">
                 <p className="text-xl font-extrabold text-foreground leading-tight italic">
-                  "Unindo academia, setor produtivo e governo para transformar a Amazônia através da excelência científica."
+                  &#34;Unindo academia, setor produtivo e governo para transformar a Amazônia através da excelência científica.&#34;
                 </p>
               </div>
             </motion.div>
@@ -193,7 +203,7 @@ export default function Home() {
       </section>
 
       {/* Featured Projects */}
-      <section className="py-32 bg-secondary/30 relative overflow-hidden">
+      <section className="py-16 sm:py-32 bg-secondary/30 relative overflow-hidden">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionHeader
             eyebrow="Destaques"
@@ -227,25 +237,25 @@ export default function Home() {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.2 }}
               >
-                <Card className="flex flex-col h-full bg-background border-border/50 hover:border-primary/30 transition-all duration-500 shadow-xl hover:shadow-2xl rounded-[2.5rem] overflow-hidden group">
+                <Card className="flex flex-col gap-8 h-full bg-background border-border/50 hover:border-primary/30 transition-all duration-500 shadow-xl hover:shadow-2xl rounded-[2.5rem] overflow-hidden group">
                   <div className="h-64 bg-muted relative overflow-hidden">
-                    <div className="absolute inset-0 bg-primary/5 group-hover:bg-primary/10 transition-colors" />
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <project.icon className="w-24 h-24 text-primary/10 group-hover:scale-110 transition-transform duration-700" />
+                  <div className="absolute inset-0 bg-slate-200 dark:bg-slate-800 group-hover:bg-slate-300 dark:group-hover:bg-slate-700 transition-colors" />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                      <project.icon className="w-24 h-24 text-slate-300 dark:text-slate-600 group-hover:scale-110 transition-transform duration-700" />
                     </div>
                   </div>
-                  <CardHeader className="p-10 pb-6">
+                  <CardHeader className="px-10">
                     <div className="text-xs font-bold text-primary mb-4 tracking-[0.2em] uppercase">{project.tag}</div>
-                    <CardTitle className="text-3xl font-extrabold leading-tight tracking-tight mb-2">{project.title}</CardTitle>
+                    <CardTitle className="text-2xl sm:text-3xl font-extrabold leading-tight tracking-tight mb-2">{project.title}</CardTitle>
                     <CardDescription className="text-base font-bold text-muted-foreground flex items-center gap-2">
                       <span className="h-1.5 w-1.5 rounded-full bg-primary" /> Parceria: {project.partner}
                     </CardDescription>
                   </CardHeader>
-                  <CardContent className="px-10 flex-1">
+                  <CardContent className="px-10">
                     <p className="text-muted-foreground text-lg leading-relaxed">{project.desc}</p>
                   </CardContent>
-                  <CardFooter className="p-10 pt-6">
-                    <div className="text-sm font-bold text-primary px-6 py-2 bg-primary/10 rounded-full border border-primary/20">
+                  <CardFooter className="px-10">
+                    <div className="text-sm font-bold text-primary px-6 py-2 bg-slate-100 dark:bg-slate-900 rounded-full border border-slate-200 dark:border-slate-700">
                       {project.year}
                     </div>
                   </CardFooter>
@@ -265,7 +275,7 @@ export default function Home() {
 
       {/* CTA Final */}
       <section className="py-40 bg-slate-950 dark:bg-card/30 relative overflow-hidden">
-        <div className="absolute inset-0 bg-primary/10 mix-blend-overlay opacity-30" />
+        <div className="absolute inset-0 bg-slate-950 mix-blend-overlay opacity-30" />
         <div className="absolute -top-1/2 -right-1/4 w-full h-full rounded-full bg-primary/20 blur-[180px] pointer-events-none" />
 
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center relative z-10">
