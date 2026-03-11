@@ -30,11 +30,11 @@ export const noticias: NewsItem[] = [
         readTime: "2 min de leitura",
         category: "Institucional",
         imagePlaceholder: "IA",
-        thumbnail: "/images/noticias/isaci-participa-abertura-workshop-inct-iamazonia/workshop-hero.png",
+        thumbnail: "/assets/images/noticias/isaci-participa-abertura-workshop-inct-iamazonia/workshop-hero.png",
         content: [
             {
                 type: "image",
-                src: "/images/noticias/isaci-participa-abertura-workshop-inct-iamazonia/workshop-hero.png",
+                src: "/assets/images/noticias/isaci-participa-abertura-workshop-inct-iamazonia/workshop-hero.png",
                 caption: "Presidente do iSACI, Prof. Dr. Claudio Alex da Rocha, conduz mesa-redonda “Captação de recursos: plataformas e hubs” durante o I Workshop INCT IAmazônia."
             },
             {
@@ -55,7 +55,7 @@ export const noticias: NewsItem[] = [
             },
             {
                 type: "image",
-                src: "/images/noticias/isaci-participa-abertura-workshop-inct-iamazonia/claudio-interview.png",
+                src: "/assets/images/noticias/isaci-participa-abertura-workshop-inct-iamazonia/claudio-interview.png",
                 caption: "Entrevista do Prof. Dr. Claudio Alex sobre a participação do iSACI no I Workshop INCT IAmazônia"
             },
             {

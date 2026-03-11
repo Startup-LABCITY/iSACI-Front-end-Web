@@ -197,16 +197,16 @@ export default function Home() {
                 desc: "Infraestrutura crítica preparada para a COP30 com IA e Edge Computing.",
                 year: "2024 - 2026",
                 icon: Lightbulb,
-                image: "/images/projetos/infovias/prodepa.png"
+                image: "/assets/images/projetos/infovias/prodepa.png"
               },
               {
                 tag: "Bioeconomia",
                 title: "Sustentabilidade em Juruti (PBSJUR)",
                 partner: "ALCOA",
-                desc: "Cadeias produtivas sustentáveis integrando IoT e analytics comunitário.",
+                desc: "Cadeias produturas sustentáveis integrando IoT e analytics comunitário.",
                 year: "2024 - 2027",
                 icon: Leaf,
-                image: "/images/projetos/juruti/ALCOA.png"
+                image: "/assets/images/projetos/juruti/ALCOA.png"
               }
             ].map((project, i) => (
               <motion.div
