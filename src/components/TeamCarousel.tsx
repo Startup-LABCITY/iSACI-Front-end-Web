@@ -163,9 +163,20 @@ export function TeamCarousel() {
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="relative rounded-[3rem] overflow-hidden aspect-[4/5] lg:h-[700px] border border-border shadow-2xl group w-full"
+            className="relative rounded-[3rem] overflow-hidden aspect-[4/5] lg:h-[700px] border border-border shadow-2xl group w-full cursor-grab active:cursor-grabbing touch-none"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            dragElastic={0.2}
+            onDragEnd={(event, info) => {
+                const swipeThreshold = 50;
+                if (info.offset.x < -swipeThreshold) {
+                    nextSlide();
+                } else if (info.offset.x > swipeThreshold) {
+                    prevSlide();
+                }
+            }}
         >
             <AnimatePresence mode="wait">
                 <motion.div

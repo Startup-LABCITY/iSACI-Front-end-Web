@@ -125,9 +125,6 @@ export function Header() {
                                             className="h-10 w-auto object-contain dark:brightness-200"
                                         />
                                     </Link>
-                                    <Button variant="ghost" size="icon" onClick={() => setOpen(false)} className="rounded-full">
-                                        <X className="h-6 w-6" />
-                                    </Button>
                                     <SheetTitle className="sr-only">Menu de navegação</SheetTitle>
                                 </div>
 
@@ -145,8 +142,8 @@ export function Header() {
                                                 className={cn(
                                                     "flex items-center px-6 py-4 text-lg font-semibold rounded-2xl transition-all h-16",
                                                     pathname === link.href
-                                                        ? "text-primary bg-shade-100 shadow-sm border border-primary"
-                                                        : "text-muted-foreground hover:text-primary hover:bg-primary"
+                                                        ? "text-primary-foreground bg-primary shadow-md"
+                                                        : "text-muted-foreground hover:text-primary-foreground hover:bg-primary hover:shadow-md active:scale-95 transition-all duration-200"
                                                 )}
                                             >
                                                 {link.label}
