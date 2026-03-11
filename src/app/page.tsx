@@ -216,7 +216,7 @@ export default function Home() {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.2 }}
               >
-                <Card className="flex flex-col gap-8 h-full bg-background border-border/50 hover:border-primary/30 transition-all duration-500 shadow-xl hover:shadow-2xl rounded-[2.5rem] overflow-hidden group">
+                <Card className="flex flex-col gap-8 h-full bg-background border-border/50 hover:border-primary/30 transition-all duration-500 shadow-xl hover:shadow-2xl rounded-[2.5rem] overflow-hidden group p-0 pb-8">
                   <div className="h-64 bg-muted relative overflow-hidden">
                     {project.image ? (
                       <div className="absolute inset-0">
