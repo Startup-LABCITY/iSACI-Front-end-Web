@@ -75,10 +75,16 @@ export const noticias: NewsItem[] = [
         readTime: "3 min de leitura",
         category: "Projetos",
         imagePlaceholder: "PB",
+        thumbnail: "/assets/images/noticias/nova-parceria-alcoa-bioeconomia-juruti/ALCOA.png",
         content: [
             {
+                type: "image",
+                src: "/assets/images/noticias/nova-parceria-alcoa-bioeconomia-juruti/ALCOA.png",
+                caption: "Parceria entre iSACI e ALCOA para fortalecer a bioeconomia em Juruti."
+            },
+            {
                 type: "paragraph",
-                text: "O Instituto iSACI firmou uma nova parceria estratégica com a ALCOA para impulsionar a bioeconomia na região de Juruti, no Pará..."
+                text: "O Instituto iSACI firmou uma nova parceria estratégica com a ALCOA para impulsionar a bioeconomia na região de Juruti, no Pará. O acordo prevê a construção de uma biofábrica voltada para a produção de óleos, manteigas e biojoias com base na flora local, gerando renda e sustentabilidade para a comunidade."
             }
         ]
     },

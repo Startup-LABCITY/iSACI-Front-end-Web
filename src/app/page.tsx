@@ -196,7 +196,8 @@ export default function Home() {
                 partner: "PRODEPA",
                 desc: "Infraestrutura crítica preparada para a COP30 com IA e Edge Computing.",
                 year: "2024 - 2026",
-                icon: Lightbulb
+                icon: Lightbulb,
+                image: "/images/projetos/infovias/prodepa.png"
               },
               {
                 tag: "Bioeconomia",
@@ -204,7 +205,8 @@ export default function Home() {
                 partner: "ALCOA",
                 desc: "Cadeias produtivas sustentáveis integrando IoT e analytics comunitário.",
                 year: "2024 - 2027",
-                icon: Leaf
+                icon: Leaf,
+                image: "/images/projetos/juruti/ALCOA.png"
               }
             ].map((project, i) => (
               <motion.div
@@ -216,9 +218,25 @@ export default function Home() {
               >
                 <Card className="flex flex-col gap-8 h-full bg-background border-border/50 hover:border-primary/30 transition-all duration-500 shadow-xl hover:shadow-2xl rounded-[2.5rem] overflow-hidden group">
                   <div className="h-64 bg-muted relative overflow-hidden">
-                    <div className="absolute inset-0 bg-slate-200 dark:bg-slate-800 group-hover:bg-slate-300 dark:group-hover:bg-slate-700 transition-colors" />
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <project.icon className="w-24 h-24 text-slate-300 dark:text-slate-600 group-hover:scale-110 transition-transform duration-700" />
+                    {project.image ? (
+                      <div className="absolute inset-0">
+                        <Image 
+                          src={project.image} 
+                          alt={project.title}
+                          fill
+                          className="object-cover transition-transform duration-700 group-hover:scale-105"
+                          onError={(e) => {
+                            // Fallback to icon if image fails to load
+                            e.currentTarget.style.display = 'none';
+                          }}
+                        />
+                        <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500" />
+                      </div>
+                    ) : (
+                      <div className="absolute inset-0 bg-slate-200 dark:bg-slate-800 group-hover:bg-slate-300 dark:group-hover:bg-slate-700 transition-colors" />
+                    )}
+                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                      {!project.image && <project.icon className="w-24 h-24 text-slate-300 dark:text-slate-600 group-hover:scale-110 transition-transform duration-700" />}
                     </div>
                   </div>
                   <CardHeader className="px-10">
