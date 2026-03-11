@@ -62,7 +62,7 @@ export function Header() {
                 >
                     <Link href="/" className="flex items-center gap-2 group" aria-label="iSACI - Página inicial">
                         <Image
-                            src="/assets/logo_icone.png"
+                            src="/assets/logo_header_new.png"
                             alt="Logo iSACI"
                             width={160}
                             height={54}
@@ -118,7 +118,7 @@ export function Header() {
                                         className="flex items-center gap-2"
                                     >
                                         <Image
-                                            src="/assets/logo_icone.png"
+                                            src="/assets/logo_header_new.png"
                                             alt="Logo iSACI"
                                             width={140}
                                             height={40}
