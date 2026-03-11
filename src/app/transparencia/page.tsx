@@ -5,13 +5,14 @@ import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { BarChart, FileText, Download, ShieldCheck, Scale, FileSignature, CheckCircle2 } from "lucide-react"
+import { DOCUMENTS } from "@/lib/documents"
 
 export default function TransparenciaPage() {
     const relatorios = [
-        { title: "Relatório Anual 2023", desc: "Balanço completo das atividades, projetos e resultados alcançados pelo ISACI em 2023.", date: "Janeiro 2024", status: "Disponível", icon: BarChart },
-        { title: "Prestação de Contas - 1º Semestre 2024", desc: "Demonstrativo financeiro e de atividades do primeiro semestre de 2024.", date: "Julho 2024", status: "Disponível", icon: FileText },
-        { title: "Relatório de Impacto Social", desc: "Análise do impacto social e ambiental dos projetos desenvolvidos pelo instituto.", date: "Março 2024", status: "Disponível", icon: EarthIcon },
-        { title: "Relatório Anual 2024", desc: "Relatório anual com todas as atividades e resultados de 2024.", date: "Janeiro 2025", status: "Em Preparação", icon: BarChart },
+        { title: "Relatório Anual 2023", desc: "Balanço completo das atividades, projetos e resultados alcançados pelo ISACI em 2023.", date: "Janeiro 2024", status: "Disponível", icon: BarChart, file: DOCUMENTS.TRANSPARENCIA.RELATORIO_2023 },
+        { title: "Prestação de Contas - 1º Semestre 2024", desc: "Demonstrativo financeiro e de atividades do primeiro semestre de 2024.", date: "Julho 2024", status: "Disponível", icon: FileText, file: DOCUMENTS.TRANSPARENCIA.PRESTACAO_2024_1S },
+        { title: "Relatório de Impacto Social", desc: "Análise do impacto social e ambiental dos projetos desenvolvidos pelo instituto.", date: "Março 2024", status: "Disponível", icon: EarthIcon, file: DOCUMENTS.TRANSPARENCIA.IMPACTO_SOCIAL },
+        { title: "Relatório Anual 2024", desc: "Relatório anual com todas as atividades e resultados de 2024.", date: "Janeiro 2025", status: "Em Preparação", icon: BarChart, file: "#" },
     ]
 
     const documentosGovernanca = [
@@ -61,13 +62,17 @@ export default function TransparenciaPage() {
 
                                     <div className="flex items-center justify-between mt-auto pt-8 border-t border-border/50">
                                         <span className="text-xs text-muted-foreground font-bold uppercase tracking-[0.2em]">{relatorio.date}</span>
-                                        <button
-                                            className="flex items-center gap-2 text-sm font-extrabold text-primary hover:text-primary/80 transition-all group/btn disabled:opacity-30 disabled:cursor-not-allowed"
-                                            disabled={relatorio.status !== "Disponível"}
+                                        <a
+                                            href={relatorio.file}
+                                            download
+                                            className={cn(
+                                                "flex items-center gap-2 text-sm font-extrabold text-primary hover:text-primary/80 transition-all group/btn",
+                                                relatorio.status !== "Disponível" && "opacity-30 cursor-not-allowed pointer-events-none"
+                                            )}
                                         >
                                             <Download className="h-5 w-5 transition-transform group-hover/btn:-translate-y-1" />
                                             Baixar PDF
-                                        </button>
+                                        </a>
                                     </div>
                                 </CardContent>
                             </Card>
