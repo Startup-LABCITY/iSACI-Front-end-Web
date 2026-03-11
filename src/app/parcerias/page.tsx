@@ -41,6 +41,35 @@ export default function ParceriasPage() {
             description: "Empresas líderes globais que colaboram ativamente no desenvolvimento de novas tecnologias para a Amazônia.",
             partners: [
                 { name: "Ericsson", logo: LogoEricsson, url: "https://www.ericsson.com/" },
+                { name: "DataLife", logo: "/assets/images/Empresas/datalife-logo.png", url: "#" },
+                { name: "Directto", logo: "/assets/images/Empresas/directto_logo.png", url: "#" },
+                { name: "OCALEV", logo: "/assets/images/Empresas/ocalev_logo.png", url: "#" },
+            ]
+        },
+        {
+            title: "Laboratórios e Centros",
+            category: "Ecossistema de Inovação",
+            description: "Laboratórios de ponta integrados ao iSACI, desenvolvendo pesquisas em inteligência artificial, sensores e infraestrutura digital.",
+            partners: [
+                { 
+                    name: "LabCity", 
+                    logo: "/assets/images/Laboratórios/LABCITY-logo preta.png", 
+                    logoDark: "/assets/images/Laboratórios/LABCITY-SQUARE-DARK.png",
+                    url: "#" 
+                },
+                { 
+                    name: "CCAD", 
+                    logo: "/assets/images/Laboratórios/Logo em português - colorida.png", 
+                    logoDark: "/assets/images/Laboratórios/logo ccad branca.png",
+                    url: "#" 
+                },
+                { name: "GPSA", logo: "/assets/images/Laboratórios/gpsa_logo.png", url: "#" },
+                { name: "LabNano", logo: "/assets/images/Laboratórios/labnano_logo.png", url: "#" },
+                { name: "LACIS", logo: "/assets/images/Laboratórios/lacis_logo.png", url: "#" },
+                { name: "LASSE", logo: "/assets/images/Laboratórios/lasse_logo-843x1024.png", url: "#" },
+                { name: "LEA", logo: "/assets/images/Laboratórios/lea_logo.png", url: "#" },
+                { name: "LIARIS", logo: "/assets/images/Laboratórios/liaris_logo.png", url: "#" },
+                { name: "LPO", logo: "/assets/images/Laboratórios/logo_lpo.png", url: "#" },
             ]
         },
         {
@@ -109,12 +138,29 @@ export default function ParceriasPage() {
                                                     {/* Expanded Logo Container with Shine Effect */}
                                                     <div className="relative w-full aspect-[4/3] mb-6 bg-white/70 dark:bg-white/5 rounded-2xl p-8 overflow-hidden border border-border/20 transition-all duration-500 group-hover:bg-white dark:group-hover:bg-white/10 group-hover:border-primary/20">
                                                         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:animate-shine pointer-events-none" />
-                                                        <Image
-                                                            src={partner.logo}
-                                                            alt={partner.name}
-                                                            fill
-                                                            className="object-contain transition-transform duration-700 group-hover:scale-110"
-                                                        />
+                                                        {typeof partner.logo === 'string' && (partner as any).logoDark ? (
+                                                            <>
+                                                                <Image
+                                                                    src={partner.logo}
+                                                                    alt={partner.name}
+                                                                    fill
+                                                                    className="object-contain transition-transform duration-700 group-hover:scale-110 dark:hidden"
+                                                                />
+                                                                <Image
+                                                                    src={(partner as any).logoDark}
+                                                                    alt={partner.name}
+                                                                    fill
+                                                                    className="object-contain transition-transform duration-700 group-hover:scale-110 hidden dark:block"
+                                                                />
+                                                            </>
+                                                        ) : (
+                                                            <Image
+                                                                src={partner.logo}
+                                                                alt={partner.name}
+                                                                fill
+                                                                className="object-contain transition-transform duration-700 group-hover:scale-110"
+                                                            />
+                                                        )}
                                                     </div>
 
                                                     <div className="text-center pt-2">
