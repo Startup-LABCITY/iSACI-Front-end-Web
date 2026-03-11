@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Code, BookOpen, Leaf, Cpu, Award } from "lucide-react"
+import Image from "next/image"
 
 export default function ProjetosPage() {
     const portfolioCientifico = [
@@ -204,8 +205,14 @@ export default function ProjetosPage() {
 
                     <div className="grid lg:grid-cols-2 gap-12 mt-16">
                         <div className="flex flex-col rounded-3xl overflow-hidden border border-border bg-card/50">
-                            <div className="h-64 bg-muted relative flex items-center justify-center p-8 text-center text-primary/30">
-                                <Cpu className="w-24 h-24" />
+                            <div className="h-64 relative overflow-hidden">
+                                <Image 
+                                    src="/assets/images/projetos/infovias/prodepa.png" 
+                                    alt="Modernização das Infovias Digitais"
+                                    fill
+                                    className="object-cover transition-transform duration-700 hover:scale-105"
+                                />
+                                <div className="absolute inset-0 bg-black/10 transition-colors" />
                                 <Badge variant="secondary" className="absolute top-4 right-4 bg-background border-border font-medium">
                                     Em Andamento
                                 </Badge>
@@ -230,8 +237,14 @@ export default function ProjetosPage() {
                         </div>
 
                         <div className="flex flex-col rounded-3xl overflow-hidden border border-border bg-card/50">
-                            <div className="h-64 bg-muted relative flex items-center justify-center p-8 text-center text-primary/30">
-                                <Leaf className="w-24 h-24 text-accent" />
+                            <div className="h-64 relative overflow-hidden">
+                                <Image 
+                                    src="/assets/images/projetos/juruti/ALCOA.png" 
+                                    alt="Sustentabilidade em Juruti"
+                                    fill
+                                    className="object-cover transition-transform duration-700 hover:scale-105"
+                                />
+                                <div className="absolute inset-0 bg-black/10 transition-colors" />
                                 <Badge variant="secondary" className="absolute top-4 right-4 bg-background border-border font-medium">
                                     Em Andamento
                                 </Badge>
