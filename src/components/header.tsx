@@ -64,9 +64,9 @@ export function Header() {
                         <Image
                             src="/assets/logo_header_new.png"
                             alt="Logo iSACI"
-                            width={160}
-                            height={54}
-                            className="max-h-14 w-auto object-contain py-1 transition-all duration-300 group-hover:scale-105 group-hover:brightness-110 dark:brightness-200"
+                            width={120}
+                            height={40}
+                            className="max-h-10 w-auto object-contain py-1 transition-all duration-300 group-hover:scale-105 group-hover:brightness-110 dark:brightness-200"
                             priority
                         />
                     </Link>
@@ -120,9 +120,9 @@ export function Header() {
                                         <Image
                                             src="/assets/logo_header_new.png"
                                             alt="Logo iSACI"
-                                            width={140}
-                                            height={40}
-                                            className="h-10 w-auto object-contain dark:brightness-200"
+                                            width={100}
+                                            height={28}
+                                            className="h-7 w-auto object-contain dark:brightness-200"
                                         />
                                     </Link>
                                     <SheetTitle className="sr-only">Menu de navegação</SheetTitle>
