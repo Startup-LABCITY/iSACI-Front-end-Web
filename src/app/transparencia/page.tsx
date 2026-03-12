@@ -17,12 +17,8 @@ export default function TransparenciaPage() {
 
     const documentosGovernanca = [
         { title: "Estatuto Social", desc: "Documento fundador que estabelece os princípios, objetivos e estrutura organizacional do ISACI." },
-        { title: "Código de Ética", desc: "Diretrizes éticas que norteiam todas as atividades e relacionamentos do instituto." },
-        { title: "Política de Governança", desc: "Conjunto de regras e processos que garantem a gestão transparente e responsável." },
-        { title: "Regimento Interno", desc: "Normas internas que regulamentam o funcionamento e as atividades do instituto." },
-        { title: "Política de Conflito de Interesses", desc: "Diretrizes para identificação e gestão de potenciais conflitos de interesse." },
-        { title: "Manual de Compliance", desc: "Procedimentos para assegurar o cumprimento de todas as normas legais e regulamentares." },
-    ]
+        { title: "Política de Inovação", desc: "Diretrizes para identificação e gestão de potenciais conflitos de interesse." },
+     ]
 
     return (
         <div className="flex flex-col min-h-screen">

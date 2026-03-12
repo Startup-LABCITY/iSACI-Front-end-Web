@@ -85,6 +85,12 @@ export default function SobrePage() {
             image: "/assets/gestores/diretoria/andre_moacir_lage_miranda_upscaled.png",
             bio: "Doutor em EE pela UFPA (2014). Chefe de TI da SEJUDH (2008-2009). Professor do IFPA desde 2008."
         },
+        {
+            name: "Liane Márcia Batista Barbosa", role: "Dir. Administrativa e Secretária",
+            lattes: "", linkedin: "https://www.linkedin.com/in/liane-barbosa-07122824/",
+            image: "/assets/gestores/associados/Liane-Márcia-Batista-Barbosa.png",
+            bio: "Bacharel em Adm. pela UFPA. Ex-Secretária Executiva do LEA/UFPA (2010-2024). Secretária Executiva do iSACI desde 2024."
+        }
     ]
 
     const instituidores = [
@@ -145,12 +151,7 @@ export default function SobrePage() {
     ]
 
     const associados = [
-        {
-            name: "Liane Márcia Batista Barbosa", role: "Dir. Administrativa e Secretária",
-            lattes: "", linkedin: "https://www.linkedin.com/in/liane-barbosa-07122824/",
-            image: "/assets/gestores/associados/Liane-Márcia-Batista-Barbosa.png",
-            bio: "Bacharel em Adm. pela UFPA. Ex-Secretária Executiva do LEA/UFPA (2010-2024). Secretária Executiva do iSACI desde 2024."
-        }
+
     ]
 
     return (
@@ -210,7 +211,7 @@ export default function SobrePage() {
                     {/* Sub-bloco: Diretoria Executiva */}
                     <div className="mt-20">
                         <div className="flex items-center gap-4 mb-12">
-                            <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-[#88b04b]">Diretoria Executiva</h3>
+                            <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-[#88b04b]">Diretoria</h3>
                             <div className="h-px flex-1 bg-[#88b04b]/20" />
                         </div>
                         <div className="grid md:grid-cols-3 gap-8">
@@ -267,7 +268,7 @@ export default function SobrePage() {
                     {/* Sub-bloco: Instituidores */}
                     <div className="mt-28">
                         <div className="flex items-center gap-4 mb-10">
-                            <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-[#88b04b]">Conselho de Instituidores</h3>
+                            <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-[#88b04b]">Membros Instituidores</h3>
                             <div className="h-px flex-1 bg-[#88b04b]/20" />
                         </div>
                         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -302,59 +303,6 @@ export default function SobrePage() {
                                         {membro.lattes && (
                                             <a href={membro.lattes} target="_blank" rel="noreferrer" title="Currículo Lattes">
                                                 <LattesIcon className="h-4 w-4" />
-                                            </a>
-                                        )}
-                                    </div>
-                                </Card>
-                            ))}
-                        </div>
-                    </div>
-
-                    {/* Sub-bloco: Associados */}
-                    <div className="mt-24">
-                        <div className="flex items-center gap-4 mb-8">
-                            <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-[#88b04b]/60">Apoio Institucional</h3>
-                            <div className="h-px flex-1 bg-[#88b04b]/10" />
-                        </div>
-                        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                            {associados.map((assoc, i) => (
-                                <Card key={i} className="group relative flex flex-col items-center p-6 border-none bg-background shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07)] hover:shadow-[0_10px_25px_-5px_rgba(0,0,0,0.1)] transition-all duration-300">
-                                    <div className="absolute top-0 left-0 right-0 h-[3px] bg-[#88b04b]/70" />
-
-                                    <div className="relative w-24 h-24 mb-4">
-                                        <div className="absolute inset-0 rounded-full overflow-hidden border-2 border-background shadow-xs ring-1 ring-border/20">
-                                            <Image
-                                                src={assoc.image}
-                                                alt={assoc.name}
-                                                fill
-                                                className="object-cover"
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className="text-center flex-1 flex flex-col items-center">
-                                        <h4 className="text-[15px] font-bold text-foreground leading-tight mb-2 min-h-[2.5rem] flex items-center justify-center">{assoc.name}</h4>
-                                        <p className="text-[10px] text-[#88b04b] uppercase tracking-wider mb-2 font-bold max-w-[200px] leading-snug">{assoc.role}</p>
-                                        <div className="flex items-center gap-1.5 text-muted-foreground/60 mb-4 text-[11px]">
-                                            <Mail className="h-3 w-3" />
-                                            <span className="truncate max-w-[120px]">contato@isaci.org.br</span>
-                                        </div>
-                                        <p className="text-xs text-muted-foreground/60 mb-6 italic line-clamp-3">
-                                            {assoc.bio}
-                                        </p>
-                                    </div>
-
-                                    {/* Lattes / LinkedIn links at corners */}
-                                    <div className="absolute bottom-3 right-3 text-[#88b04b]/30 group-hover:text-[#88b04b] transition-colors">
-                                        {assoc.lattes && (
-                                            <a href={assoc.lattes} target="_blank" rel="noreferrer" title="Currículo Lattes">
-                                                <LattesIcon className="h-4 w-4" />
-                                            </a>
-                                        )}
-                                    </div>
-                                    <div className="absolute bottom-3 left-3 text-muted-foreground/30 hover:text-primary transition-colors">
-                                        {assoc.linkedin && (
-                                            <a href={assoc.linkedin} target="_blank" rel="noreferrer" title="LinkedIn">
-                                                <Linkedin className="h-4 w-4" />
                                             </a>
                                         )}
                                     </div>
